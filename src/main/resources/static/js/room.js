@@ -1,10 +1,12 @@
 'use strict';
 
 let header = document.querySelector('#header');
+let paragraph = document.querySelector('#p');
 
 let roomId = null;
+let stompClient = null;
 
-document.addEventListener("DOMContentLoaded", setRoomId);
+document.addEventListener("DOMContentLoaded", setRoom);
 
 function getQueryVariable(variable) {
     let query = window.location.search.substring(1);
@@ -18,10 +20,42 @@ function getQueryVariable(variable) {
     return null;
 }
 
-function setRoomId() {
+async function isRoomValid(id) {
+    let req = await fetch("api/rooms/" + id)
+    if (req.ok) {
+        let text = await req.text();
+        console.log(text)
+        return text == 200;
+    }
+    return false;
+}
+
+async function setRoom() {
     let id = getQueryVariable("id");
+
+    if (!await isRoomValid(id)) {
+        location.replace("/404.html");
+    }
     roomId = id;
     if (roomId != null) {
-        header.textContent = "YOU ENTERED ROOM: " + id;
+        header.textContent = "YOU ENTERED ROOM: " + roomId;
     }
+
+    let socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+}
+
+async function onConnected() {
+    // Subscribe to the Public Topic
+    await stompClient.subscribe('/topic/room/' + roomId, onMessageReceived);
+    let t = await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
+}
+
+function onMessageReceived(payload) {
+    paragraph.textContent = payload.body;
+}
+
+function onError(error) {
+    console.log("ERROR");
 }

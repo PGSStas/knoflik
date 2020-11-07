@@ -1,6 +1,6 @@
 'use strict';
 
-let messageInput = document.querySelector('#code');
+let messageInput = document.getElementById('code');
 
 document.getElementById("button1").onclick = createRoom;
 document.getElementById("button2").onclick = checkRoom;
@@ -10,15 +10,14 @@ async function createRoom(event) {
     console.info(req)
     if (req.ok) {
         let id = await req.text();
-        await enterRoom(id);
+        enterRoom(id);
     }
 }
 
-async function checkRoom() {
-    await enterRoom(messageInput.textContent);
+function checkRoom() {
+    enterRoom(messageInput.value);
 }
 
-async function enterRoom(roomId) {
-    let req = await fetch("api/redirect/room?roomId=" + roomId);
-    document.location.href = req.url;
+function enterRoom(roomId) {
+    document.location.href = "/room.html?id=" + roomId;
 }
