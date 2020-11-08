@@ -1,4 +1,4 @@
-package com.knoflik.restknoflik.config;
+package com.knoflik.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

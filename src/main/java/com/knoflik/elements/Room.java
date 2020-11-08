@@ -1,4 +1,4 @@
-package com.knoflik.restknoflik.elements;
+package com.knoflik.elements;
 
 import org.hibernate.annotations.GenericGenerator;
 

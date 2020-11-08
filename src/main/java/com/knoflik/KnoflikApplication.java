@@ -1,13 +1,13 @@
-package com.knoflik.restknoflik;
+package com.knoflik;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestKnoflikApplication {
+public class KnoflikApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RestKnoflikApplication.class, args);
+        SpringApplication.run(KnoflikApplication.class, args);
     }
 
 }

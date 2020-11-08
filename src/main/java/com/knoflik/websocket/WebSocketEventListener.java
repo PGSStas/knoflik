@@ -1,4 +1,4 @@
-package com.knoflik.restknoflik.websocket;
+package com.knoflik.websocket;
 
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;

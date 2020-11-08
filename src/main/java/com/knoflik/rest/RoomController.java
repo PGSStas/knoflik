@@ -1,4 +1,4 @@
-package com.knoflik.restknoflik.rest;
+package com.knoflik.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
