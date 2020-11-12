@@ -3,6 +3,7 @@ package com.knoflik.entities;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
@@ -13,11 +14,16 @@ public class Room {
     @Column(length = 32)
     private String id;
 
-    @Column(name = "admin_id", length = 16)
-    private String adminID;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId
+    private User admin;
 
     @Column(name = "pack_id", length = 32)
-    private String packID;
+    private String packID = null;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @MapsId
+    private Set<User> activeUsers;
 
     public String getId() {
         return id;
@@ -27,12 +33,12 @@ public class Room {
         this.id = id;
     }
 
-    public String getAdminID() {
-        return adminID;
+    public User getAdmin() {
+        return admin;
     }
 
-    public void setAdminID(String adminID) {
-        this.adminID = adminID;
+    public void setAdmin(User admin) {
+        this.admin = admin;
     }
 
     public String getPackID() {
@@ -43,8 +49,24 @@ public class Room {
         this.packID = packID;
     }
 
+    public Set<User> getActiveUsers() {
+        return activeUsers;
+    }
+
+    public void setActiveUsers(Set<User> activeUsers) {
+        this.activeUsers = activeUsers;
+    }
+
+    public void addUser(User user) {
+        if (admin == null) {
+            System.out.println(user);
+            setAdmin(user);
+        }
+        this.activeUsers.add(user);
+    }
+
     @Override
     public String toString() {
-        return "[id = " + getId() + ", AdminID = " + getAdminID() + ", PackID = " + getPackID() + "]";
+        return "[id = " + getId() + ", Admin = " + getAdmin() + ", PackID = " + getPackID() + ", UsersInRoom = " + activeUsers.toString();
     }
 }

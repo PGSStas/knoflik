@@ -25,7 +25,7 @@ async function isRoomValid(id) {
     if (req.ok) {
         let text = await req.text();
         console.log(text)
-        return text == 200;
+        return text !== "";
     }
     return false;
 }
@@ -49,13 +49,16 @@ async function setRoom() {
 async function onConnected() {
     // Subscribe to the Public Topic
     await stompClient.subscribe('/topic/room/' + roomId, onMessageReceived);
-    let t = await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
+    await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
 }
 
 function onMessageReceived(payload) {
-    paragraph.textContent = payload.body;
+    let users = JSON.parse(payload.body);
+    let activeUsers = "ActiveUsers: ";
+    users.forEach(element => activeUsers += element["username"] + " ");
+    paragraph.textContent = activeUsers ;
 }
 
-function onError(error) {
+function onError() {
     console.log("ERROR");
 }

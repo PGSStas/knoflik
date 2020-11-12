@@ -1,7 +1,11 @@
 package com.knoflik.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.knoflik.entities.Room;
+import com.knoflik.entities.User;
 import com.knoflik.repositories.room.RoomRepository;
+import com.knoflik.repositories.user.UserRepository;
+import com.knoflik.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -9,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 
 @Controller
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
-    @Autowired
-    private RoomRepository roomRepository;
 
-    private final HashMap<String, Integer> usersInRooms = new HashMap<>();
-    private final Random rnd = new Random();
+    @Autowired
+    private RoomService roomService;
+
     private final SimpMessagingTemplate template;
 
     @Autowired
@@ -28,29 +32,24 @@ public class RoomController {
 
     @GetMapping
     public String getRooms() {
-        return roomRepository.findAll().toString();
+        return roomService.getAllRooms().toString();
     }
 
     @GetMapping("/new")
     public String createRoom() {
-        Room room = new Room();
-        roomRepository.save(room);
-        usersInRooms.put(room.getId(), 0);
-        return room.getId();
+        return roomService.createRoom().getId();
     }
 
     @GetMapping("/{id}")
-    public String getRoom(@PathVariable String id) {
-        if (roomRepository.existsById(id)) {
-            return "200";
-        } else {
-            return "404";
-        }
+    public Room getRoomById(@PathVariable String id) {
+        return roomService.getRoomById(id);
     }
 
     @PostMapping("/{id}/addUser")
-    public void addUser(@PathVariable String id) {
-        usersInRooms.put(id, usersInRooms.get(id) + 1);
-        this.template.convertAndSend("/topic/room/"+id, usersInRooms.get(id));
+    public void addUser(@PathVariable String id) throws Exception {
+        if (roomService.addUserToRoom(id)) {
+            this.template.convertAndSend("/topic/room/" + id,
+                    (new ObjectMapper()).writeValueAsString(roomService.getAllUsersFromRoom(id)));
+        }
     }
 }
