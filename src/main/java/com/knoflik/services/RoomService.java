@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class RoomService {
+public final class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
@@ -25,7 +25,7 @@ public class RoomService {
         return room;
     }
 
-    public Room getRoomById(String id) {
+    public Room getRoomById(final String id) {
         return roomRepository.findById(id).orElse(null);
     }
 
@@ -33,8 +33,8 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public boolean addUserToRoom(String room_id) {
-        Room room = roomRepository.findById(room_id).orElse(null);
+    public boolean addUserToRoom(final String roomId) {
+        Room room = roomRepository.findById(roomId).orElse(null);
         if (room == null) {
             return false;
         }
@@ -45,8 +45,8 @@ public class RoomService {
         return true;
     }
 
-    public Set<User> getAllUsersFromRoom(String room_id) {
-        Room room = roomRepository.findById(room_id).orElse(null);
+    public Set<User> getAllUsersFromRoom(final String roomId) {
+        Room room = roomRepository.findById(roomId).orElse(null);
         if (room == null) {
             return null;
         }
