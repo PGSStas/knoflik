@@ -33,3 +33,8 @@ if (hasProperty('buildScan')) {
         termsOfServiceAgree = 'yes'
     }
 }
+
+checkstyle {
+    config = rootProject.resources.text.fromFile(
+            'config/checkstyle/sun_checks.xml')
+}
