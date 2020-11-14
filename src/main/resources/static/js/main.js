@@ -1,6 +1,6 @@
 'use strict';
 
-let messageInput = document.getElementById('codeInputField');
+let codeInputField = document.getElementById('codeInputField');
 
 document.getElementById("createRoomButton").onclick = createRoom;
 document.getElementById("submitCodeButton").onclick = checkRoom;
@@ -15,7 +15,7 @@ async function createRoom(event) {
 }
 
 function checkRoom() {
-    enterRoom(messageInput.value);
+    enterRoom(codeInputField.value);
 }
 
 function enterRoom(roomId) {
