@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RestController
 @RequestMapping("/api/rooms")
-public final class RoomController {
-    /**
-     * RoomService that prov
-     */
+public class RoomController {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Autowired
     private RoomService roomService;
 
     private final SimpMessagingTemplate template;
 
     @Autowired
-    public RoomController(final SimpMessagingTemplate newTemplate) {
+        public RoomController(final SimpMessagingTemplate newTemplate) {
         this.template = newTemplate;
     }
 
@@ -48,7 +47,7 @@ public final class RoomController {
     public void addUser(@PathVariable final String id) throws Exception {
         if (roomService.addUserToRoom(id)) {
             this.template.convertAndSend("/topic/room/" + id,
-                    (new ObjectMapper()).writeValueAsString(
+                    objectMapper.writeValueAsString(
                             roomService.getAllUsersFromRoom(id)));
         }
     }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public final class RoomService {
+public class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;

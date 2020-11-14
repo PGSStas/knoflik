@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public final class User {
+public class User {
     private final int columnLength = 32;
 
     @Id

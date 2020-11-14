@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rooms")
-public final class Room {
+public class Room {
     private final int columnLength = 32;
 
     @Id
@@ -67,9 +67,6 @@ public final class Room {
     }
 
     public void addUser(final User user) {
-        if (admin == null) {
-            setAdmin(user);
-        }
         this.activeUsers.add(user);
     }
 
