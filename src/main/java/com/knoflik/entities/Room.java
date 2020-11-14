@@ -21,15 +21,14 @@ public final class Room {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-//    @Column(length = length)
     private String id;
+
+    @Column(name = "pack_id", length = columnLength)
+    private String packID = null;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
     private User admin;
-
-    @Column(name = "pack_id", length = columnLength)
-    private String packID = null;
 
     @OneToMany(fetch = FetchType.LAZY)
     @MapsId
@@ -43,20 +42,20 @@ public final class Room {
         this.id = newId;
     }
 
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(final User newAdmin) {
-        this.admin = newAdmin;
-    }
-
     public String getPackID() {
         return packID;
     }
 
     public void setPackID(final String newPackID) {
         this.packID = newPackID;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(final User newAdmin) {
+        this.admin = newAdmin;
     }
 
     public Set<User> getActiveUsers() {
@@ -69,7 +68,6 @@ public final class Room {
 
     public void addUser(final User user) {
         if (admin == null) {
-            System.out.println(user);
             setAdmin(user);
         }
         this.activeUsers.add(user);
