@@ -1,9 +1,9 @@
 'use strict';
 
-let messageInput = document.getElementById('code');
+let messageInput = document.getElementById('codeInputField');
 
-document.getElementById("button1").onclick = createRoom;
-document.getElementById("button2").onclick = checkRoom;
+document.getElementById("createRoomButton").onclick = createRoom;
+document.getElementById("submitCodeButton").onclick = checkRoom;
 
 async function createRoom(event) {
     let req = await fetch("/api/rooms/new");
