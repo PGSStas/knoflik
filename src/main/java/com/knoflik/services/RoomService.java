@@ -6,6 +6,7 @@ import com.knoflik.repositories.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class RoomService {
 
     public Room createRoom() {
         Room room = new Room();
-        User user = userService.createUser();
+        User user = userService.getLoggedUser();
         room.setAdmin(user);
         roomRepository.save(room);
         return room;
@@ -35,11 +36,13 @@ public class RoomService {
 
     public boolean addUserToRoom(final String roomId) {
         Room room = roomRepository.findById(roomId).orElse(null);
+        System.out.println("BLACK");
         if (room == null) {
             return false;
         }
 
-        User user = userService.createUser();
+        User user = userService.getLoggedUser();
+
         room.addUser(user);
         roomRepository.save(room);
         return true;

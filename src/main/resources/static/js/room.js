@@ -17,6 +17,9 @@ function getQueryVariable(variable) {
 }
 
 async function isRoomValid(id) {
+    if (id == "") {
+        return false;
+    }
     let req = await fetch("api/rooms/" + id)
     if (req.ok) {
         let text = await req.text();

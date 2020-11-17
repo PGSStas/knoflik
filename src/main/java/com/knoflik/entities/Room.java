@@ -1,5 +1,6 @@
 package com.knoflik.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -28,6 +29,7 @@ public class Room {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User admin;
 
     @OneToMany(fetch = FetchType.LAZY)
