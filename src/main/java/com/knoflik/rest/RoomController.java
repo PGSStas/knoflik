@@ -33,11 +33,6 @@ public class RoomController {
         return roomService.getAllRooms().toString();
     }
 
-    @GetMapping("/new")
-    public String createRoom() {
-        return roomService.createRoom().getId();
-    }
-
     @GetMapping("/{id}")
     public Room getRoomById(@PathVariable final String id) {
         return roomService.getRoomById(id);

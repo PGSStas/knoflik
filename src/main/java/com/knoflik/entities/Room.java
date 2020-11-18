@@ -19,12 +19,11 @@ public class Room {
     private final int columnLength = 32;
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column(name = "pack_id", length = columnLength)
-    private String packID = null;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId
+    private RoomSettings settings;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
@@ -40,14 +39,6 @@ public class Room {
 
     public void setId(final String newId) {
         this.id = newId;
-    }
-
-    public String getPackID() {
-        return packID;
-    }
-
-    public void setPackID(final String newPackID) {
-        this.packID = newPackID;
     }
 
     public User getAdmin() {
@@ -70,10 +61,21 @@ public class Room {
         this.activeUsers.add(user);
     }
 
+    public RoomSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(RoomSettings settings) {
+        this.settings = settings;
+    }
+
     @Override
     public String toString() {
-        return "[id = " + getId() + ", Admin = " + getAdmin()
-                + ", PackID = " + getPackID() + ", UsersInRoom = "
-                + activeUsers.toString();
+        return "Room{" +
+               "id='" + id + '\'' +
+               ", settings=" + settings +
+               ", admin=" + admin +
+               ", activeUsers=" + activeUsers +
+               '}';
     }
 }

@@ -3,21 +3,17 @@
 let codeInputField = document.getElementById('codeInputField');
 
 document.getElementById("createRoomButton").onclick = createRoom;
-document.getElementById("submitCodeButton").onclick = checkRoom;
+document.getElementById("submitCodeButton").onclick = enterRoom;
 
-async function createRoom(event) {
+async function createRoom() {
     let req = await fetch("/api/rooms/new");
     console.info(req)
     if (req.ok) {
         let id = await req.text();
-        enterRoom(id);
+        document.location.href = "/room-creation.html";
     }
 }
 
-function checkRoom() {
-    enterRoom(codeInputField.value);
-}
-
-function enterRoom(roomId) {
-    document.location.href = "/room.html?id=" + roomId;
+function enterRoom() {
+    document.location.href = "/room.html?id=" + codeInputField.value;
 }
