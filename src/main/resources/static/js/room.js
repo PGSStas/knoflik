@@ -46,8 +46,8 @@ async function setRoom() {
 }
 
 async function onConnected() {
-    await stompClient.subscribe('/topic/room/' + roomId, onMessageReceived);
     await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
+    await stompClient.subscribe('/topic/room/' + roomId, onMessageReceived);
 }
 
 function onMessageReceived(payload) {

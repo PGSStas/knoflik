@@ -1,5 +1,6 @@
 package com.knoflik.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,12 +11,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -31,6 +35,10 @@ public class User implements UserDetails {
     private String username;
 
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room currentRoom;
 
     @Transient
     private String passwordConfirm;
@@ -74,11 +82,19 @@ public class User implements UserDetails {
         this.roles = newRoles;
     }
 
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(final Room newCurrentRoom) {
+        this.currentRoom = newCurrentRoom;
+    }
+
     @Override
     public String toString() {
         return "[id = " + getId() + ", username = " + getUsername()
                 + ", password = " + getPassword() + ", passwordConfirm = "
-                + getPasswordConfirm() + "]";
+                + getPasswordConfirm() + ", room = " + getCurrentRoom() + "]";
     }
 
     @Override

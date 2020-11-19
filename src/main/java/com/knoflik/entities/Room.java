@@ -5,15 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "rooms")
 public class Room {
@@ -27,13 +26,8 @@ public class Room {
     @Column(name = "pack_id", length = columnLength)
     private String packID = null;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @MapsId
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User admin;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToMany
+    @JoinColumn(name = "room_id")
     private Set<User> activeUsers;
 
     public String getId() {
@@ -52,14 +46,6 @@ public class Room {
         this.packID = newPackID;
     }
 
-    public User getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(final User newAdmin) {
-        this.admin = newAdmin;
-    }
-
     public Set<User> getActiveUsers() {
         return activeUsers;
     }
@@ -72,10 +58,15 @@ public class Room {
         this.activeUsers.add(user);
     }
 
+    public void removeUserByUsername(final String nickname) {
+        this.activeUsers.removeIf(a -> {
+            return a.getUsername().equals(nickname);
+        });
+    }
+
     @Override
     public String toString() {
-        return "[id = " + getId() + ", Admin = " + getAdmin()
-                + ", PackID = " + getPackID() + ", UsersInRoom = "
-                + activeUsers.toString();
+        return "[id = " + getId() + ", PackID = " + getPackID()
+                + ", UsersInRoom = " + activeUsers.toString();
     }
 }

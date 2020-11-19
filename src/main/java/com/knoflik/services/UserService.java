@@ -60,7 +60,8 @@ public class UserService implements UserDetailsService {
                 SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
-        System.out.println(1);
-        return userRepository.findUserByUsername(username);
+        User user = userRepository.findUserByUsername(username);
+        System.out.println("Auth " + user);
+        return user;
     }
 }

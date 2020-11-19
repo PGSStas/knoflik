@@ -1,6 +1,7 @@
 package com.knoflik.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.knoflik.entities.Room;
 import com.knoflik.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
     @Autowired
     private RoomService roomService;
-
-    private final SimpMessagingTemplate template;
-
-    @Autowired
-        public RoomController(final SimpMessagingTemplate newTemplate) {
-        this.template = newTemplate;
-    }
 
     @GetMapping
     public String getRooms() {
@@ -45,10 +37,6 @@ public class RoomController {
 
     @PostMapping("/{id}/addUser")
     public void addUser(@PathVariable final String id) throws Exception {
-        if (roomService.addUserToRoom(id)) {
-            this.template.convertAndSend("/topic/room/" + id,
-                    objectMapper.writeValueAsString(
-                            roomService.getAllUsersFromRoom(id)));
-        }
+        roomService.addUserToRoom(id);
     }
 }
