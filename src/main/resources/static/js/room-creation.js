@@ -1,16 +1,18 @@
 'use strict';
 
 let leaderCheckBox = document.querySelector('#leader')
-leaderCheckBox.onclick = leaderCheckBoxClick();
+leaderCheckBox.onclick = leaderCheckBoxClick;
 let showQuestionsCheckBox = document.querySelector('#show-questions')
 let answerCheckBox = document.querySelector('#oral-answer')
 
 function leaderCheckBoxClick() {
     if (leaderCheckBox.checked) {
-        showQuestionsCheckBox.enabled = true;
-        answerCheckBox.enabled = true;
+        showQuestionsCheckBox.disabled = false;
+        answerCheckBox.disabled = false;
     } else {
-        showQuestionsCheckBox.enabled = false;
-        answerCheckBox.enabled = false;
+        showQuestionsCheckBox.disabled = true;
+        answerCheckBox.disabled = true;
+        showQuestionsCheckBox.checked = true;
+        answerCheckBox.checked = false;
     }
 }

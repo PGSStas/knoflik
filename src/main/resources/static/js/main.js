@@ -10,7 +10,7 @@ async function createRoom() {
     console.info(req)
     if (req.ok) {
         let id = await req.text();
-        document.location.href = "/room-creation.html";
+        document.location.href = "/room-creation";
     }
 }
 

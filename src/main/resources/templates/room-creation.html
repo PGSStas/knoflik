@@ -16,11 +16,12 @@
     <div id="timings-block">
         <p>
             <label for="topics">Темы: </label>
-            <input type="number" id="topics" value="4" min="1" max="60" th:field="*{topics}"/>
+            <input type="number" id="topics" value="4" th:value="4" min="1" max="60"
+                   th:field="*{topics}"/>
         </p>
         <p>
             <label for="question-time">Время после чтения вопроса: </label>
-            <input type="number" id="question-time" value="60" min="30" max="180"
+            <input type="number" id="question-time" th:value="60" min="30" max="180"
                    th:field="*{questionTime}"/>
         </p>
         <p>
@@ -37,7 +38,8 @@
     <div id="checkbox-block">
         <input type="checkbox" id="leader" value="leader" th:field="*{leader}">
         <label for="leader"> Игра с ведущим</label><br>
-        <input type="checkbox" id="show-questions" value="show" th:field="*{showQuestions}" disabled>
+        <input type="checkbox" id="show-questions" value="show" th:field="*{showQuestions}" checked
+               disabled>
         <label for="show-questions"> Показывать вопросы</label><br>
         <input type="checkbox" id="oral-answer" name="oral-answer" value="ans"
                th:field="*{oralAnswer}" disabled>
@@ -48,6 +50,6 @@
     </div>
 </form>
 
-<script src="../static/js/room-creation.js"></script>
+<script th:src="@{/js/room-creation.js}"></script>
 </body>
 </html>

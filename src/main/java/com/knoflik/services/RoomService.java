@@ -41,7 +41,7 @@ public class RoomService {
         room.setId(id);
         settings.setId(id);
         room.setSettings(settings);
-        // set admin somehow
+        room.setAdmin(userService.createUser()); //todo: настоящий админ
         roomRepository.save(room);
 
         return id;
