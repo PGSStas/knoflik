@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
@@ -26,8 +25,7 @@ public class Room {
     @Column(name = "pack_id", length = columnLength)
     private String packID = null;
 
-    @OneToMany
-    @JoinColumn(name = "room_id")
+    @OneToMany(mappedBy = "currentRoom")
     private Set<User> activeUsers;
 
     public String getId() {

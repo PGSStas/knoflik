@@ -41,9 +41,6 @@ public class RoomService {
         }
 
         User user = userService.getLoggedUser();
-
-        room.addUser(user);
-        roomRepository.save(room);
         user.setCurrentRoom(room);
         userService.saveUser(user);
         return true;
@@ -65,9 +62,6 @@ public class RoomService {
 
         User user = userService.getLoggedUser();
         user.setCurrentRoom(null);
-        room.removeUserByUsername(userService.getLoggedUser().getUsername());
-
         userService.saveUser(user);
-        roomRepository.save(room);
     }
 }

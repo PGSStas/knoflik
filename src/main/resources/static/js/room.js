@@ -17,7 +17,7 @@ function getQueryVariable(variable) {
 }
 
 async function isRoomValid(id) {
-    if (id == "") {
+    if (id === "") {
         return false;
     }
     let req = await fetch("api/rooms/" + id)
@@ -40,14 +40,14 @@ async function setRoom() {
         header.textContent = "YOU ENTERED ROOM: " + roomId;
     }
 
-    let socket = new SockJS('/ws');
+    let socket = new SockJS('/secured/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, onConnected, onError);
 }
 
 async function onConnected() {
+    await stompClient.subscribe('/sucered/topic/room/' + roomId, onMessageReceived);
     await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
-    await stompClient.subscribe('/topic/room/' + roomId, onMessageReceived);
 }
 
 function onMessageReceived(payload) {

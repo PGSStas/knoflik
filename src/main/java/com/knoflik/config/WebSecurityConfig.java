@@ -10,13 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final int encryptionDegree = 12;
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/js/main.js", "/registration").permitAll()
+                .antMatchers("/secured/topic/room/**").authenticated()
+                .antMatchers("/topic/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -34,6 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder(encryptionDegree);
+        return new BCryptPasswordEncoder(12);
     }
 }
