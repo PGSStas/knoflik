@@ -41,6 +41,10 @@ public class RoomService {
         }
 
         User user = userService.getLoggedUser();
+        if (room.getActiveUsers().stream().anyMatch(u -> user.getUsername()
+                .equals(u.getUsername()))) {
+            return true;
+        }
         user.setCurrentRoom(room);
         userService.saveUser(user);
         return true;

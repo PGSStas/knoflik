@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -25,7 +26,7 @@ public class Room {
     @Column(name = "pack_id", length = columnLength)
     private String packID = null;
 
-    @OneToMany(mappedBy = "currentRoom")
+    @OneToMany(mappedBy = "currentRoom", fetch = FetchType.LAZY)
     private Set<User> activeUsers;
 
     public String getId() {

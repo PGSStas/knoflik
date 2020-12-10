@@ -2,7 +2,6 @@ package com.knoflik.services;
 
 import com.knoflik.entities.Role;
 import com.knoflik.entities.User;
-import com.knoflik.repositories.role.RoleRepository;
 import com.knoflik.repositories.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -26,6 +28,7 @@ public class RegistrationController {
 
     @PostMapping
     public String addUser(@ModelAttribute("userForm") final User userForm,
+                          final HttpServletRequest request,
                           final BindingResult bindingResult,
                           final Model model) {
         if (bindingResult.hasErrors()) {

@@ -42,12 +42,13 @@ async function setRoom() {
 
     let socket = new SockJS('/secured/ws');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, onConnected, onError);
+    stompClient.connect({room: roomId}, onConnected, onError);
 }
 
 async function onConnected() {
-    await stompClient.subscribe('/sucered/topic/room/' + roomId, onMessageReceived);
+    await stompClient.subscribe('/secured/topic/room/' + roomId, onMessageReceived);
     await fetch("api/rooms/" + roomId + "/addUser", {method: 'POST'});
+    stompClient.send("/secured/app/connect/" + roomId, {});
 }
 
 function onMessageReceived(payload) {
