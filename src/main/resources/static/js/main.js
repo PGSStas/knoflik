@@ -1,23 +1,21 @@
 'use strict';
 
-let codeInputField = document.getElementById('codeInputField');
-
-document.getElementById("createRoomButton").onclick = createRoom;
-document.getElementById("submitCodeButton").onclick = checkRoom;
-
-async function createRoom(event) {
+async function createRoom() {
     let req = await fetch("/api/rooms/new");
-    console.info(req)
+
     if (req.ok) {
         let id = await req.text();
         enterRoom(id);
     }
 }
 
-function checkRoom() {
+function connectRoom() {
+    let codeInputField = document.getElementById("codeInputField");
     enterRoom(codeInputField.value);
 }
 
 function enterRoom(roomId) {
-    document.location.href = "/room.html?id=" + roomId;
+    let str = "/room?id=" + roomId
+    console.log(str);
+    document.location.href = str;
 }

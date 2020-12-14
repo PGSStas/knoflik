@@ -19,8 +19,8 @@ public class RoomService {
 
     public Room createRoom() {
         Room room = new Room();
-        User user = userService.createUser();
-        room.setAdmin(user);
+        User user = userService.getLoggedUser();
+        // room.setAdmin(user);
         roomRepository.save(room);
         return room;
     }
@@ -35,13 +35,18 @@ public class RoomService {
 
     public boolean addUserToRoom(final String roomId) {
         Room room = roomRepository.findById(roomId).orElse(null);
+
         if (room == null) {
             return false;
         }
 
-        User user = userService.createUser();
-        room.addUser(user);
-        roomRepository.save(room);
+        User user = userService.getLoggedUser();
+        if (room.getActiveUsers().stream().anyMatch(u -> user.getUsername()
+                .equals(u.getUsername()))) {
+            return true;
+        }
+        user.setCurrentRoom(room);
+        userService.saveUser(user);
         return true;
     }
 
@@ -51,5 +56,16 @@ public class RoomService {
             return null;
         }
         return room.getActiveUsers();
+    }
+
+    public void removeUserFromRoom(final String roomId) {
+        Room room = roomRepository.findById(roomId).orElse(null);
+        if (room == null) {
+            return;
+        }
+
+        User user = userService.getLoggedUser();
+        user.setCurrentRoom(null);
+        userService.saveUser(user);
     }
 }

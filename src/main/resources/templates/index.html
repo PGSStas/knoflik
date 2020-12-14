@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Knoflik</title>
+
+    <script th:src="@{js/main.js}"></script>
+</head>
+<body>
+<noscript>
+    <h2>Sorry! Your browser doesn't support Javascript</h2>
+</noscript>
+
+<div>
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/login}">Login</a>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a th:href="@{/registration}">Registration</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <h1>Create New Room</h1>
+        <form>
+            <div>
+                <button type="button" id="createRoomButton"
+                        th:onclick="createRoom()">Create
+                </button>
+            </div>
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        <h1 class="title">Or Connect to existed room</h1>
+        <input type="text" th:id="codeInputField"
+               placeholder="Enter room code"/>
+        <button type="button" id="submitCodeButton" th:onclick="connectRoom()">
+            Connect
+        </button>
+    </div>
+</div>
+</body>
+</html>
