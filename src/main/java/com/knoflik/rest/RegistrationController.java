@@ -1,6 +1,7 @@
 package com.knoflik.rest;
 
 import com.knoflik.entities.User;
+import com.knoflik.services.PackageParsingService;
 import com.knoflik.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/registration")
 public class RegistrationController {
+    @Autowired
+    private PackageParsingService packageParsingService;
     @Autowired
     private UserService userService;
 
