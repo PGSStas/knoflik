@@ -1,12 +1,14 @@
 package com.knoflik.services;
 
 import com.knoflik.entities.Room;
+import com.knoflik.entities.RoomSettings;
 import com.knoflik.entities.User;
 import com.knoflik.repositories.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @Service
@@ -17,12 +19,32 @@ public class RoomService {
     @Autowired
     private UserService userService;
 
-    public Room createRoom() {
-        Room room = new Room();
-        User user = userService.getLoggedUser();
-        // room.setAdmin(user);
+    private String generateId() {
+        Random random = new Random();
+        StringBuilder id = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            id.append((char) (65 + random.nextInt(26)));
+        }
+        return id.toString();
+    }
+
+    public void saveRoom(Room room) {
         roomRepository.save(room);
-        return room;
+    }
+
+    public String createRoom(RoomSettings settings) {
+        String id;
+        do {
+            id = generateId();
+        } while (roomRepository.existsById(id));
+        Room room = new Room();
+        room.setId(id);
+        settings.setId(id);
+        room.setSettings(settings);
+        room.setAdmin(userService.getLoggedUser());
+        roomRepository.save(room);
+
+        return id;
     }
 
     public Room getRoomById(final String id) {
@@ -35,18 +57,13 @@ public class RoomService {
 
     public boolean addUserToRoom(final String roomId) {
         Room room = roomRepository.findById(roomId).orElse(null);
-
         if (room == null) {
             return false;
         }
 
         User user = userService.getLoggedUser();
-        if (room.getActiveUsers().stream().anyMatch(u -> user.getUsername()
-                .equals(u.getUsername()))) {
-            return true;
-        }
-        user.setCurrentRoom(room);
-        userService.saveUser(user);
+        room.addUser(user);
+        roomRepository.save(room);
         return true;
     }
 
@@ -56,16 +73,5 @@ public class RoomService {
             return null;
         }
         return room.getActiveUsers();
-    }
-
-    public void removeUserFromRoom(final String roomId) {
-        Room room = roomRepository.findById(roomId).orElse(null);
-        if (room == null) {
-            return;
-        }
-
-        User user = userService.getLoggedUser();
-        user.setCurrentRoom(null);
-        userService.saveUser(user);
     }
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание комнаты</title>
+    <script th:src="@{js//js/room-creation.js}"></script>
+</head>
+<body>
+<h1>Создание комнаты</h1>
+<form th:action="@{/room-creation}" th:object="${roomForm}" method="post">
+    <div id="package-block">
+        <p>Пакет: </p>
+        <!-- empty button, for now -->
+        <button type="button" id="package-choice-button" th:field="*{packID}">Выбрать
+            пакет</button>
+    </div>
+    <div id="timings-block">
+        <p>
+            <label for="topics">Темы: </label>
+            <input type="number" id="topics" value="4" th:value="4" min="1" max="60"
+                   th:field="*{topics}"/>
+        </p>
+        <p>
+            <label for="question-time">Время после чтения вопроса: </label>
+            <input type="number" id="question-time" th:value="60" min="30" max="180"
+                   th:field="*{questionTime}"/>
+        </p>
+        <p>
+            <label for="answer-time">Время на ответ: </label>
+            <input type="number" id="answer-time" value="10" min="10" max="60"
+                   th:field="*{answerTime}">
+        </p>
+        <p>
+            <label for="repeat-time">Время на повторное нажатие: </label>
+            <input type="number" id="repeat-time" value="15" min="0" max="60"
+                   th:field="*{repeatTime}">
+        </p>
+    </div>
+    <div id="checkbox-block">
+        <input type="checkbox" id="leader" value="leader" th:field="*{leader}">
+        <label for="leader"> Игра с ведущим</label><br>
+        <input type="checkbox" id="show-questions" value="show" th:field="*{showQuestions}" checked
+               disabled>
+        <label for="show-questions"> Показывать вопросы</label><br>
+        <input type="checkbox" id="oral-answer" name="oral-answer" value="ans"
+               th:field="*{oralAnswer}" disabled>
+        <label for="oral-answer"> Устный ответ</label><br>
+    </div>
+    <div id="create-room-block">
+        <button type="submit">Создать комнату</button>
+    </div>
+</form>
+</body>
+</html>

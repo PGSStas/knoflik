@@ -5,16 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
@@ -37,6 +28,9 @@ public class User implements UserDetails {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Room currentRoom;
+
+    @OneToOne
+    private Room administratedRoom;
 
     @Transient
     private String passwordConfirm;
