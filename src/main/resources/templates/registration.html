@@ -5,15 +5,24 @@
     <title>Spring Security Example </title>
 </head>
 <body>
-<form th:action="@{/registration}" th:object="${userForm}" method="post" >
+<form th:action="@{/registration}" th:object="${userForm}" method="post">
+    <div th:if="${(param.usernameError != null) and (param.usernameError[0] == 'true')}">
+        This user is already exists!
+    </div>
+    <div th:if="${(param.passwordError != null) and (param.passwordError[0] == 'true')}">
+        Passwords are missmatches!
+    </div>
     <div>
         <label> User Name : <input type="text" th:field="*{username}"/> </label>
     </div>
     <div>
-        <label> Password: <input type="password" th:field="*{password}"/> </label>
+        <label> Password: <input type="password" th:field="*{password}"/>
+        </label>
     </div>
     <div>
-        <label> Confirm password: <input type="password" th:field="*{passwordConfirm}"/> </label>
+        <label> Confirm password: <input type="password"
+                                         th:field="*{passwordConfirm}"/>
+        </label>
     </div>
     <div><input type="submit" value="Sign In"/></div>
 </form>
