@@ -1,14 +1,14 @@
 package com.knoflik.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,18 +17,34 @@ import java.util.Set;
 @Entity
 @Table(name = "rooms")
 public class Room {
-    private final int columnLength = 32;
-
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
-    @Column(name = "pack_id", length = columnLength)
-    private String packID = null;
 
     @OneToMany(mappedBy = "currentRoom", fetch = FetchType.LAZY)
     private Set<User> activeUsers = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    private RoomSettings settings;
+
+    @OneToOne(mappedBy = "administratedRoom", fetch = FetchType.LAZY)
+    private User admin;
+
+    public RoomSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(final RoomSettings settings) {
+        this.settings = settings;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(final User admin) {
+        this.admin = admin;
+    }
 
     public String getId() {
         return id;
@@ -36,14 +52,6 @@ public class Room {
 
     public void setId(final String newId) {
         this.id = newId;
-    }
-
-    public String getPackID() {
-        return packID;
-    }
-
-    public void setPackID(final String newPackID) {
-        this.packID = newPackID;
     }
 
     public Set<User> getActiveUsers() {
@@ -66,7 +74,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "[id = " + getId() + ", PackID = " + getPackID()
-                + ", UsersInRoom = " + activeUsers.toString();
+        return "Room{" + "id='" + id + '\'' + ", activeUsers=" + activeUsers
+                + ", settings=" + settings + ", admin=" + admin + '}';
     }
 }

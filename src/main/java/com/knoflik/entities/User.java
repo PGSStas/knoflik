@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
@@ -37,6 +38,9 @@ public class User implements UserDetails {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Room currentRoom;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Room administratedRoom;
 
     @Transient
     private String passwordConfirm;
