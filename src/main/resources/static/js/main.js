@@ -1,10 +1,5 @@
 'use strict';
 
-let codeInputField = document.getElementById('codeInputField');
-
-document.getElementById("createRoomButton").onclick = createRoom;
-document.getElementById("submitCodeButton").onclick = enterRoom;
-
 async function createRoom() {
     let req = await fetch("/api/rooms/new");
     console.info(req)
@@ -15,5 +10,6 @@ async function createRoom() {
 }
 
 function enterRoom() {
+    let codeInputField = document.getElementById("codeInputField");
     document.location.href = "/room?id=" + codeInputField.value;
 }

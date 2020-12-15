@@ -1,7 +1,6 @@
 'use strict';
 
 let leaderCheckBox = document.querySelector('#leader')
-leaderCheckBox.onclick = leaderCheckBoxClick;
 let showQuestionsCheckBox = document.querySelector('#show-questions')
 let answerCheckBox = document.querySelector('#oral-answer')
 
