@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.HashSet;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -27,7 +28,7 @@ public class Room {
     private String packID = null;
 
     @OneToMany(mappedBy = "currentRoom", fetch = FetchType.LAZY)
-    private Set<User> activeUsers;
+    private Set<User> activeUsers = new HashSet<>();
 
     public String getId() {
         return id;

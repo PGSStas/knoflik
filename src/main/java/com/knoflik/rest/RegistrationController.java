@@ -1,6 +1,7 @@
 package com.knoflik.rest;
 
 import com.knoflik.entities.User;
+import com.knoflik.services.PackageParsingService;
 import com.knoflik.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/registration")
 public class RegistrationController {
     @Autowired
+    private PackageParsingService packageParsingService;
+    @Autowired
     private UserService userService;
 
     @GetMapping
@@ -32,16 +35,16 @@ public class RegistrationController {
                           final BindingResult bindingResult,
                           final Model model) {
         if (bindingResult.hasErrors()) {
-            return "registration";
+            return "redirect:/registration";
         }
         if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
-            model.addAttribute("passwordError", "Пароли не совпадают");
-            return "registration";
+            model.addAttribute("passwordError", "true");
+            return "redirect:/registration";
         }
         if (!userService.saveUser(userForm)) {
             model.addAttribute("usernameError",
-                    "Пользователь с таким именем уже существует");
-            return "registration";
+                    "true");
+            return "redirect:/registration";
         }
 
         return "redirect:/";
