@@ -1,36 +1,39 @@
 package com.knoflik.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "rooms")
 public class Room {
-    private final int columnLength = 32;
-
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     @OneToMany(mappedBy = "currentRoom", fetch = FetchType.LAZY)
     private Set<User> activeUsers;
 
-    @OneToOne(mappedBy = "room", fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
     private RoomSettings settings;
 
-    @OneToOne(mappedBy = "administratedRoom", fetch = FetchType.LAZY, optional = false)
+    @OneToOne(mappedBy = "administratedRoom", fetch = FetchType.LAZY)
     private User admin;
 
     public RoomSettings getSettings() {
         return settings;
     }
 
-    public void setSettings(RoomSettings settings) {
+    public void setSettings(final RoomSettings settings) {
         this.settings = settings;
     }
 
@@ -38,7 +41,7 @@ public class Room {
         return admin;
     }
 
-    public void setAdmin(User admin) {
+    public void setAdmin(final User admin) {
         this.admin = admin;
     }
 
@@ -70,11 +73,7 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
-               "id='" + id + '\'' +
-               ", activeUsers=" + activeUsers +
-               ", settings=" + settings +
-               ", admin=" + admin +
-               '}';
+        return "Room{" + "id='" + id + '\'' + ", activeUsers=" + activeUsers
+                + ", settings=" + settings + ", admin=" + admin + '}';
     }
 }

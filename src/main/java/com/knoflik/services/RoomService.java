@@ -4,6 +4,7 @@ import com.knoflik.entities.Room;
 import com.knoflik.entities.RoomSettings;
 import com.knoflik.entities.User;
 import com.knoflik.repositories.room.RoomRepository;
+import com.knoflik.repositories.room.RoomSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,8 @@ public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
+    private RoomSettingsRepository roomSettingsRepository;
+    @Autowired
     private UserService userService;
 
     private String generateId() {
@@ -28,21 +31,26 @@ public class RoomService {
         return id.toString();
     }
 
-    public void saveRoom(Room room) {
+    public void saveRoom(final Room room) {
         roomRepository.save(room);
     }
 
-    public String createRoom(RoomSettings settings) {
+    public String createRoom(final RoomSettings settings) {
         String id;
         do {
             id = generateId();
         } while (roomRepository.existsById(id));
+        settings.setId(id);
+        roomSettingsRepository.save(settings);
+
         Room room = new Room();
         room.setId(id);
-        settings.setId(id);
         room.setSettings(settings);
-        room.setAdmin(userService.getLoggedUser());
+        User user = userService.getLoggedUser();
+
         roomRepository.save(room);
+        user.setCurrentRoom(room);
+        userService.saveUser(user);
 
         return id;
     }

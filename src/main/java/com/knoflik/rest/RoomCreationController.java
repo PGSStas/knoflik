@@ -1,10 +1,7 @@
 package com.knoflik.rest;
 
-import com.knoflik.entities.Room;
 import com.knoflik.entities.RoomSettings;
-import com.knoflik.entities.User;
 import com.knoflik.services.RoomService;
-import com.knoflik.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,28 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/room-creation")
 public class RoomCreationController {
-  @Autowired
-  RoomService roomService;
+    @Autowired
+    private RoomService roomService;
 
-  @GetMapping
-  public String roomCreation(final Model model) {
-    model.addAttribute("roomForm", new RoomSettings());
+    @GetMapping
+    public String roomCreation(final Model model) {
+        model.addAttribute("roomForm", new RoomSettings());
 
-    return "room-creation";
-  }
-
-  @PostMapping
-  public String createRoom(@ModelAttribute("roomForm") final RoomSettings roomForm,
-                           final BindingResult bindingResult,
-                           final Model model) {
-    if (bindingResult.hasErrors()) {
-      return "room-creation";
+        return "room-creation";
     }
-    if (roomForm.getTopics() > 100000000) { // todo: проверить, достаточно ли тем в пакете
-      model.addAttribute("packageError", "В пакете недостаточно тем");
-      return "room-creation";
+
+    @PostMapping
+    public String createRoom(
+            @ModelAttribute("roomForm") final RoomSettings roomForm,
+            final BindingResult bindingResult,
+            final Model model) {
+        if (bindingResult.hasErrors()) {
+            return "room-creation";
+        }
+        if (roomForm.getTopics()
+                > 100000000) { // todo: проверить, достаточно ли тем в пакете
+            model.addAttribute("packageError", "В пакете недостаточно тем");
+            return "room-creation";
+        }
+        String id = roomService.createRoom(roomForm);
+        return "redirect:/room?id=" + id;
     }
-    String id = roomService.createRoom(roomForm);
-    return "redirect:/room.html?id=" + id;
-  }
 }
