@@ -1,54 +1,84 @@
 package com.knoflik.entities;
 
+import com.knoflik.questions.Pack;
+import com.knoflik.questions.Question;
 import com.knoflik.questions.Theme;
-import com.knoflik.rest.QnAController;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Set;
-import java.util.TimerTask;
 
+@Entity
+@Table(name = "question_stat")
 public class QuestionStat {
-    @Autowired
-    private QnAController qnaController;
+    @Id
+    private String id;
 
-    private RoomSettings roomSettings;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    private Pack currentPack;
+    private int currentTheme = 0;
+    private int currentQuestion = -1;
 
-    private TimerTask timerTask;
-    private Set<Theme> themeSet;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<User> answeredUsers;
 
-    QuestionStat(final RoomSettings roomSettings) {
-        this.roomSettings = roomSettings;
+    public String getId() {
+        return id;
     }
 
-    public TimerTask getTimerTask() {
-        return timerTask;
+    public void setId(final String id) {
+        this.id = id;
     }
 
-    public void setTimerTask(final TimerTask timerTask) {
-        this.timerTask = timerTask;
+    public Pack getCurrentPack() {
+        return currentPack;
     }
 
-    public Set<Theme> getThemeSet() {
-        return themeSet;
+    public void setCurrentPack(final Pack currentPack) {
+        this.currentPack = currentPack;
     }
 
-    public void setThemeSet(final Set<Theme> themeSet) {
-        this.themeSet = themeSet;
+    public int getCurrentTheme() {
+        return currentTheme;
     }
 
-    public RoomSettings getRoomSettings() {
-        return roomSettings;
+    public void setCurrentTheme(final int currentTheme) {
+        this.currentTheme = currentTheme;
     }
 
-    public void setRoomSettings(final RoomSettings roomSettings) {
-        this.roomSettings = roomSettings;
+    public int getCurrentQuestion() {
+        return currentQuestion;
     }
 
-    public void deleteTimer() {
-        timerTask.cancel();
+    public void setCurrentQuestion(final int currentQuestion) {
+        this.currentQuestion = currentQuestion;
     }
 
-    public void nextQuestion() {
-        qnaController.
+    public Set<User> getAnsweredUsers() {
+        return answeredUsers;
+    }
+
+    public void setAnsweredUsers(final Set<User> answeredUsers) {
+        this.answeredUsers = answeredUsers;
+    }
+
+    public Question getNextQuestion() {
+        currentQuestion++;
+        if (currentQuestion >= 5) {
+            currentTheme++;
+            currentQuestion = 0;
+        }
+        if (currentTheme >= currentPack.getThemes().size()) {
+            return new Question();
+        }
+        Theme theme = currentPack.getThemes().get(currentTheme);
+        return theme.getQuestionSet().get(currentQuestion);
     }
 }

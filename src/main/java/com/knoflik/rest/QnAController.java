@@ -1,58 +1,60 @@
 package com.knoflik.rest;
 
-import com.knoflik.entities.QuestionStat;
+import com.knoflik.entities.Room;
 import com.knoflik.entities.User;
-import com.knoflik.questions.Answer;
-import com.knoflik.repositories.questions.PackRepository;
+import com.knoflik.questions.Question;
+import com.knoflik.services.RoomService;
 import com.knoflik.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("api/rooms")
 public class QnAController {
     @Autowired
-    private PackRepository packRepository;
+    private RoomService roomService;
     @Autowired
     private UserService userService;
 
+    @Autowired
     private SimpMessagingTemplate template;
 
-    private static Set<QuestionStat> questionStatSet;
-
-    @Autowired
-    public QnAController(final SimpMessagingTemplate template) {
-        this.template = template;
-    }
-
     @GetMapping("/{id}/answer")
-    private void recieveAnswer(
-            @ModelAttribute("answer") final Answer answer, final Model model)
-            throws InterruptedException {
-        //todo: проверка правильности вопроса
+    private void recieveAnswer(@PathVariable final String id) {
         User user = userService.getLoggedUser();
-        String id = user.getCurrentRoom().getId();
-        if (true) {
-            this.template.convertAndSend(
-                    "/secured/topic/room/" + id + "/answer", "true");
-            TimeUnit.SECONDS.sleep(3);
-
-        } else {
-            this.template.convertAndSend(
-                    "/secured/topic/room/" + id + "/answer", "false");
-        }
-
+        this.template.convertAndSend(
+                "/secured/topic/room/" + id + "/answer",
+                "Stop, answering " + user.getUsername());
     }
 
-    public String sendCorrectAnswer(final String id) {
-        this.template.convertAndSend("/secured/topic/room/" + id, questionStatSet.);
+    @GetMapping("/{id}/answer.false")
+    private void falseAnswer(@PathVariable final String id) {
+        this.template.convertAndSend(
+                "/secured/topic/room/" + id + "/answer", "false");
+    }
+
+
+    @GetMapping("/{id}/answer.true")
+    private void trueAnswer(@PathVariable final String id) {
+        this.template.convertAndSend(
+                "/secured/topic/room/" + id + "/answer", "true");
+
+        this.template.convertAndSend(
+                "/secured/topic/room/" + id + "/admin", "Change button");
+    }
+
+    @GetMapping("/{id}/nextQuestion")
+    public void nextQuestion(@PathVariable final String id) {
+        Room room = roomService.getRoomById(id);
+        Question question = room.getQuestionStat().getNextQuestion();
+
+        this.template.convertAndSend("/secured/topic/room/" + id + "/next",
+                question.getQuestion());
+        this.template.convertAndSend("/secured/topic/room/" + id + "/admin",
+                question.getAnswer());
     }
 }
