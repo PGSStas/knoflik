@@ -12,8 +12,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
@@ -36,11 +34,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Room currentRoom;
+    private String currentRoomId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Room administratedRoom;
+    private boolean isAdmin = false;
 
     @Transient
     private String passwordConfirm;
@@ -84,19 +80,27 @@ public class User implements UserDetails {
         this.roles = newRoles;
     }
 
-    public Room getCurrentRoom() {
-        return currentRoom;
+    public String getCurrentRoomId() {
+        return currentRoomId;
     }
 
-    public void setCurrentRoom(final Room newCurrentRoom) {
-        this.currentRoom = newCurrentRoom;
+    public void setCurrentRoomId(final String currentRoomId) {
+        this.currentRoomId = currentRoomId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(final boolean admin) {
+        isAdmin = admin;
     }
 
     @Override
     public String toString() {
         return "[id = " + getId() + ", username = " + getUsername()
                 + ", password = " + getPassword() + ", passwordConfirm = "
-                + getPasswordConfirm() + ", room = " + getCurrentRoom() + "]";
+                + getPasswordConfirm() + ", room = " + getCurrentRoomId() + "]";
     }
 
     @Override

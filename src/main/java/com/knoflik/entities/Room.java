@@ -27,6 +27,10 @@ public class Room {
     @MapsId
     private RoomSettings settings;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    private QuestionStat questionStat;
+
     @OneToOne(mappedBy = "administratedRoom", fetch = FetchType.LAZY)
     private User admin;
 
@@ -60,6 +64,14 @@ public class Room {
 
     public void setActiveUsers(final Set<User> newActiveUsers) {
         this.activeUsers = newActiveUsers;
+    }
+
+    public QuestionStat getQuestionStat() {
+        return questionStat;
+    }
+
+    public void setQuestionStat(final QuestionStat questionStat) {
+        this.questionStat = questionStat;
     }
 
     public void addUser(final User user) {
