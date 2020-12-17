@@ -1,0 +1,53 @@
+body {
+    background-image: url("../images/background1.png");
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+}
+
+.your_room {
+    transform: scale(0.7);
+    position: absolute;
+    bottom: 70%;
+    left: 31%;
+}
+
+.you_entered {
+    text-align: center;
+    text-decoration: none;
+    font-size: 36px;
+    font-family: sans-serif;
+    position: absolute;
+    bottom: 66%;
+    left: 33%;
+}
+
+button {
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #195aaa;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+    position: absolute;
+    bottom: 17%;
+    left: 42%;
+}
+
+button:hover {
+    background-color: #4254f5;
+}
+
+button:active {
+    background-color: #4254f5;
+    box-shadow: 0 5px #101112;
+    transform: translateY(4px);
+}
+

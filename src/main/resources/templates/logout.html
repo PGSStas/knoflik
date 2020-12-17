@@ -3,9 +3,10 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example </title>
+    <!--    <link class="logout" th:href="@{css/logut.css}" rel="stylesheet" type="text/css"/>-->
 </head>
 <body>
-<form th:action="@{/logout}" method="post">
+<form class="logout" th:action="@{/logout}" method="post">
     <div><input type="submit" value="Sign Out"/></div>
 </form>
 </body>
