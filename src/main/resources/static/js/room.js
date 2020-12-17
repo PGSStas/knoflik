@@ -6,7 +6,8 @@ let paragraph = document.querySelector('#p');
 let roomId = null;
 let stompClient = null;
 
-document.addEventListener("DOMContentLoaded", setRoom);
+document.addEventListener("DOMContentLoaded", setRoom)
+document.getElementById("startQuestionsButton").onclick = startQuiz;
 
 function getQueryVariable(variable) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -60,4 +61,8 @@ function onMessageReceived(payload) {
 
 function onError() {
     console.log("ERROR");
+}
+
+function startQuiz() {
+    document.location.href = "/quiz.html?id=" + id;
 }

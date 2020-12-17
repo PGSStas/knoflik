@@ -25,9 +25,10 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/js/**",
-                        "/html/**")
+                        "/html/**", "/css/**", "/images/**")
                 .addResourceLocations("classpath:/static/js/",
-                        "classpath:/");
+                        "classpath:/", "classpath:/static/css/",
+                        "classpath:/static/images/");
     }
 
 }

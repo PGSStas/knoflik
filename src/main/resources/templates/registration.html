@@ -3,28 +3,27 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>Spring Security Example </title>
+    <link th:href="@{css/registration.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<img class="registration" th:src="@{images/registration.png}" alt="registration">
 <form th:action="@{/registration}" th:object="${userForm}" method="post">
-    <div th:if="${(param.usernameError != null) and (param.usernameError[0] == 'true')}">
+    <div class="t" th:if="${(param.usernameError != null) and (param.usernameError[0] == 'true')}">
         This user is already exists!
     </div>
-    <div th:if="${(param.passwordError != null) and (param.passwordError[0] == 'true')}">
+    <div class="t" th:if="${(param.passwordError != null) and (param.passwordError[0] == 'true')}">
         Passwords are missmatches!
     </div>
     <div>
-        <label> User Name : <input type="text" th:field="*{username}"/> </label>
+        <label class="label1"> User Name: <input class="in1" type="text" th:field="*{username}"/> </label>
     </div>
     <div>
-        <label> Password: <input type="password" th:field="*{password}"/>
+        <label class="label2"> Password: <input class="in2" type="password" th:field="*{password}"/>
         </label>
     </div>
-    <div>
-        <label> Confirm password: <input type="password"
-                                         th:field="*{passwordConfirm}"/>
-        </label>
-    </div>
-    <div><input type="submit" value="Sign In"/></div>
+    <label class="label3"> Confirm password: <input class="in3" type="password" th:field="*{passwordConfirm}"/>
+    </label>
+    <div><input class="sign_in" type="submit" value="Sign In"/></div>
 </form>
 </body>
 </html>

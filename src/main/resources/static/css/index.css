@@ -1,0 +1,128 @@
+body {
+    background-image: url("../images/background1.png");
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+}
+
+.a_login:link, .a_login:visited, .a_registration:link, .a_registration:visited {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #195aaa;
+    color: #101112;
+    border: 2px #101112;
+    height: 90px;
+    width: 270px;
+    padding-top: 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    font-family: sans-serif;
+    display: inline-block;
+}
+
+.a_login.hover, .a_login:active, .a_registration.hover, .a_registration:active {
+    background-color: #101112;
+    color: #195aaa;
+}
+
+.a_login {
+    position: absolute;
+    bottom: 20%;
+    left: 40%;
+}
+
+.a_registration {
+    position: absolute;
+    bottom: 45%;
+    left: 40%;
+}
+
+.logout {
+    position: absolute;
+    bottom: 45%;
+    left: 40%;
+}
+
+.logo {
+    transform: scale(0.7);
+    position: absolute;
+    bottom: 49%;
+    left: 17%;
+}
+
+h1 {
+    height: 70px;
+    width: 900px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 50px;
+    font-family: sans-serif;
+}
+
+.new_room {
+    position: absolute;
+    bottom: 50%;
+    left: 23%;
+}
+
+.title {
+    position: absolute;
+    bottom: 27%;
+    left: 23%;
+}
+
+.b_create {
+    position: absolute;
+    bottom: 43%;
+    left: 40%;
+}
+
+.b_connect {
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+}
+
+button {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #195aaa;
+    color: #101112;
+    border: 2px #101112;
+    height: 90px;
+    width: 270px;
+    padding-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    font-family: sans-serif;
+    display: inline-block;
+}
+
+button:hover, button:active {
+    background-color: #101112;
+    color: #195aaa;
+}
+
+label {
+    border: 2px #101112;
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    font-family: sans-serif;
+}
+
+.room_code{
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #a5c3d5;
+    color: #101112;
+    border: 2px #101112;
+    height: 70px;
+    width: 300px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: sans-serif;
+    position: absolute;
+    bottom: 20%;
+    left: 39%;
+}
