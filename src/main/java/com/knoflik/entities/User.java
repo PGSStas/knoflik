@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
@@ -34,7 +36,9 @@ public class User implements UserDetails {
 
     private String password;
 
-    private String currentRoomId;
+    @ManyToOne
+    @JoinColumn(name = "cur_room")
+    private Room currentRoom;
 
     private boolean isAdmin = false;
 
@@ -80,27 +84,27 @@ public class User implements UserDetails {
         this.roles = newRoles;
     }
 
-    public String getCurrentRoomId() {
-        return currentRoomId;
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 
-    public void setCurrentRoomId(final String currentRoomId) {
-        this.currentRoomId = currentRoomId;
+    public void setCurrentRoom(final Room currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    public void setAdmin(final boolean admin) {
-        isAdmin = admin;
+    public void setAdmin(final boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     @Override
     public String toString() {
         return "[id = " + getId() + ", username = " + getUsername()
                 + ", password = " + getPassword() + ", passwordConfirm = "
-                + getPasswordConfirm() + ", room = " + getCurrentRoomId() + "]";
+                + getPasswordConfirm() + ", room = " + getCurrentRoom() + "]";
     }
 
     @Override

@@ -4,11 +4,9 @@ import com.knoflik.questions.Pack;
 import com.knoflik.questions.Question;
 import com.knoflik.questions.Theme;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,13 +18,14 @@ public class QuestionStat {
     @Id
     private String id;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @MapsId
+    @OneToOne
+    @JoinColumn(name = "cur_pack")
     private Pack currentPack;
     private int currentTheme = 0;
     private int currentQuestion = -1;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name = "answered_users")
     private Set<User> answeredUsers;
 
     public String getId() {
