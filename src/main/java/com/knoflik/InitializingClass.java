@@ -7,16 +7,16 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class IntitializingClass {
+public class InitializingClass {
     @Autowired
     private PackageParsingService packageParsingService;
 
     @EventListener(ApplicationReadyEvent.class)
     public void setDB() throws Exception {
         if (packageParsingService.getPackageCount() == 0) {
-            packageParsingService.parsePackage("pack1.txt");
-            packageParsingService.parsePackage("pack2.txt");
-            packageParsingService.parsePackage("pack3.txt");
+            packageParsingService.parsePackage("packages/pack1.txt");
+            packageParsingService.parsePackage("packages/pack2.txt");
+            packageParsingService.parsePackage("packages/pack3.txt");
         }
     }
 }
