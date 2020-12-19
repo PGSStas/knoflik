@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
@@ -40,7 +41,9 @@ public class User implements UserDetails {
     @JoinColumn(name = "cur_room")
     private Room currentRoom;
 
-    private boolean isAdmin = false;
+    @OneToMany
+    @JoinColumn(name = "administrated_room")
+    private Set<Room> administratedRoom;
 
     @Transient
     private String passwordConfirm;
@@ -92,12 +95,12 @@ public class User implements UserDetails {
         this.currentRoom = currentRoom;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    public Set<Room> getAdministratedRoom() {
+        return administratedRoom;
     }
 
-    public void setAdmin(final boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void addRoomToAdministrate(final Room room) {
+        administratedRoom.add(room);
     }
 
     @Override

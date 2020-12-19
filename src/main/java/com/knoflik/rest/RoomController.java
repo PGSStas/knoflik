@@ -31,17 +31,15 @@ public class RoomController {
         return roomService.getRoomById(id);
     }
 
-    @GetMapping("/{id}/isAdmin")
-    public String isAdmin(@PathVariable final String id) {
-        User user = userService.getLoggedUser();
-        if (user.isAdmin()) {
-            return "True";
-        }
-        return "False";
-    }
-
     @PostMapping("/{id}/addUser")
     public void addUser(@PathVariable final String id) throws Exception {
         roomService.addUserToRoom(id);
+    }
+
+    @GetMapping("/{id}.isAdmin")
+    public boolean isAdmin(@PathVariable final String id) {
+        User user = userService.getLoggedUser();
+        return user.getAdministratedRoom().stream().anyMatch(room -> room
+                .getId().equals(id));
     }
 }

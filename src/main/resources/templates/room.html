@@ -4,13 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>
+<!--    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>-->
 </head>
 <body>
 <img class="your_room" th:src="@{images/room.png}" alt="room">
 <h1 class="you_entered" id="header"></h1>
 <p id="p"></p>
 <button type="button" id="knoflik"></button>
+<button type="button" id="next">Next question</button>
+<button type="button" id="true">Right</button>
+<button type="button" id="false">Wrong</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{js/room.js}"></script>
