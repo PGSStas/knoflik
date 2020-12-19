@@ -69,8 +69,11 @@ async function onConnected() {
 }
 
 function onGetAnswerVerdict(payload) {
-    // todo: Сюда приходит надпись вида "Stop, answering PLAYER",
+    // todo: Сюда приходит или надпись вида "Stop, answering PLAYER",
     // где вместо PLAYER - имя текущего игрока
+    // Или вердикт "true", если администратор сказал, что игрок
+    // ответил правильно, или вердикт "false", если администратор сказал,
+    // что игрок ответил неправильно
     console.log(payload);
 }
 

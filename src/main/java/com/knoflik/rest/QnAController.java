@@ -1,7 +1,6 @@
 package com.knoflik.rest;
 
 import com.knoflik.entities.QuestionStat;
-import com.knoflik.entities.Room;
 import com.knoflik.entities.User;
 import com.knoflik.questions.Question;
 import com.knoflik.repositories.room.QuestionStatRepository;
@@ -9,8 +8,6 @@ import com.knoflik.services.RoomService;
 import com.knoflik.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
