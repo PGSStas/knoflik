@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -27,11 +28,12 @@ public class Room {
     @MapsId
     private RoomSettings settings;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @MapsId
-    private QuestionStat questionStat;
+    @OneToOne
+    @JoinColumn(name = "question_stat")
+    private QuestionStat questionStat = null;
 
-    @OneToOne(mappedBy = "administratedRoom", fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "admin")
     private User admin;
 
     public RoomSettings getSettings() {

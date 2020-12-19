@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 import java.util.Scanner;
 
 @Service
@@ -23,7 +24,8 @@ public class PackageParsingService {
     private PackRepository packRepository;
 
     public void parsePackage(final String path) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File(path));
+        Scanner scanner = new Scanner(new File(Objects.requireNonNull(
+                getClass().getClassLoader().getResource(path)).getFile()));
 
         Pack pack = new Pack();
         pack.setPackageName(scanner.nextLine());

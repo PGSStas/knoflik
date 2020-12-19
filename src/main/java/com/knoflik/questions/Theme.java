@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Theme {
     private long id;
     private String themeName;
     @OneToMany
+    @JoinColumn(name = "questions")
     private List<Question> questionSet = new ArrayList<>();
 
     public long getId() {

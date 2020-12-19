@@ -1,6 +1,5 @@
 package com.knoflik.services;
 
-import com.knoflik.entities.QuestionStat;
 import com.knoflik.entities.Room;
 import com.knoflik.entities.RoomSettings;
 import com.knoflik.entities.User;
@@ -42,18 +41,16 @@ public class RoomService {
             id = generateId();
         } while (roomRepository.existsById(id));
         settings.setId(id);
-        QuestionStat questionStat = new QuestionStat();
-        questionStat.setId(id);
         roomSettingsRepository.save(settings);
 
         Room room = new Room();
         room.setId(id);
         room.setSettings(settings);
-        room.setQuestionStat(questionStat);
         User user = userService.getLoggedUser();
+        room.setAdmin(user);
 
         roomRepository.save(room);
-        user.setCurrentRoomId(id);
+        user.setCurrentRoom(room);
         user.setAdmin(true);
         userService.saveUser(user);
 
