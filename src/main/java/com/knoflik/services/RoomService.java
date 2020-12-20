@@ -69,17 +69,17 @@ public class RoomService {
         room.setQuestionStat(questionStat);
         User user = userService.getLoggedUser();
         room.setAdmin(user);
+        room.addUser(user);
         roomRepository.save(room);
         room = getRoomById(room.getId());
-        user.setCurrentRoom(room);
+        user.addRoomToAdministrate(room);
         userService.saveUser(user);
 
         return id;
     }
 
     public Room getRoomById(final String id) {
-        Room room = roomRepository.findById(id).orElse(null);
-        return room;
+        return roomRepository.findById(id).orElse(null);
     }
 
     public List<Room> getAllRooms() {
