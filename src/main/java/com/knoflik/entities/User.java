@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,12 +36,10 @@ public class User implements UserDetails {
 
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "cur_room")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Room currentRoom;
 
-    @OneToMany
-    @JoinColumn(name = "administrated_room")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "admin")
     private Set<Room> administratedRoom;
 
     @Transient
@@ -101,13 +98,14 @@ public class User implements UserDetails {
 
     public void addRoomToAdministrate(final Room room) {
         administratedRoom.add(room);
+        room.setAdmin(this);
     }
 
     @Override
     public String toString() {
         return "[id = " + getId() + ", username = " + getUsername()
                 + ", password = " + getPassword() + ", passwordConfirm = "
-                + getPasswordConfirm() + ", room = " + getCurrentRoom() + "]";
+                + getPasswordConfirm() + "]";
     }
 
     @Override

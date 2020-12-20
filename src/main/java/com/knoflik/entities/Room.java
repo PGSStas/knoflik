@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,7 +22,7 @@ public class Room {
     @Id
     private String id;
 
-    @OneToMany(mappedBy = "currentRoom", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "currentRoom")
     private Set<User> activeUsers = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -32,8 +33,7 @@ public class Room {
     @JoinColumn(name = "question_stat")
     private QuestionStat questionStat = null;
 
-    @OneToOne
-    @JoinColumn(name = "admin")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User admin;
 
     public RoomSettings getSettings() {
@@ -78,6 +78,7 @@ public class Room {
 
     public void addUser(final User user) {
         this.activeUsers.add(user);
+        user.setCurrentRoom(this);
     }
 
     public void removeUserByUsername(final String nickname) {
