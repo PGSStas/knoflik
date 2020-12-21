@@ -13,6 +13,7 @@
 <p id="p"></p>
 <p id="question">Your question here</p>
 <p id="answer"></p>
+<p id="user_answer"></p>
 <button type="button" id="knoflik"
         th:onclick="sendVoiceAnswer()">Pup
 </button>
@@ -26,7 +27,7 @@
         th:onclick="sendAnswerDisapprove()">Wrong
 </button>
 <div>
-    <label class="label1" id="answerLabel"> Ваш ответ <input class="in1" type="text" id="userAnswer"/></label>
+    <label class="label1" id="answerLabel"> Ваш ответ <input class="in1" type="text" th:id="userAnswer"/></label>
     <button type="button" id="checkAnswer" th:onclick="checkAnswer()">Check</button>
 </div>
 

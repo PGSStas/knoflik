@@ -140,8 +140,14 @@ function onNextQuestion(payload) {
 
 function onGetAdminInfo(payload) {
     // Сюда приходит ответ на вопрос
+    console.log(payload.body);
     if (isAdmin) {
-        document.querySelector('#answer').textContent = payload.body;
+        if (payload.body.startsWith("Ответ: ")) {
+            document.querySelector('#answer').textContent = payload.body;
+            document.querySelector("#user_answer").textContent = "No one answered yet!";
+        } else {
+            document.querySelector("#user_answer").textContent = payload.body;
+        }
     }
     console.log(payload);
 }
@@ -163,7 +169,9 @@ async function getNextQuestion() {
 }
 
 async function checkAnswer() {
-
+    let m = document.getElementById("userAnswer").value;
+    console.log(m);
+    await fetch("api/rooms/" + roomId + "/resend", {method: 'POST', body: m});
 }
 
 function onMessageReceived(payload) {
