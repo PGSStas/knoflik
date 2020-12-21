@@ -45,9 +45,6 @@ public class QnAController {
     private void trueAnswer(@PathVariable final String id) {
         this.template.convertAndSend(
                 "/secured/topic/room/" + id + "/answer", "true");
-
-        this.template.convertAndSend(
-                "/secured/topic/room/" + id + "/admin", "Change button");
     }
 
     @PostMapping("/{id}/nextQuestion")
