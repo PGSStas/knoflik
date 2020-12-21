@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,9 +46,6 @@ public class QnAController {
     private void trueAnswer(@PathVariable final String id) {
         this.template.convertAndSend(
                 "/secured/topic/room/" + id + "/answer", "true");
-
-        this.template.convertAndSend(
-                "/secured/topic/room/" + id + "/admin", "Change button");
     }
 
     @PostMapping("/{id}/nextQuestion")
@@ -61,5 +59,12 @@ public class QnAController {
                 question.getQuestion());
         this.template.convertAndSend("/secured/topic/room/" + id + "/admin",
                 question.getAnswer());
+    }
+
+    @PostMapping("/{id}/resend")
+    public void resend(@PathVariable final String id,
+                       @RequestBody final String message) {
+        this.template.convertAndSend(
+                "/secured/topic/room/" + id + "/admin", message);
     }
 }

@@ -32,14 +32,14 @@ public class RoomController {
     }
 
     @PostMapping("/{id}/addUser")
-    public void addUser(@PathVariable final String id) throws Exception {
+    public void addUser(@PathVariable final String id) {
         roomService.addUserToRoom(id);
     }
 
     @GetMapping("/{id}.isAdmin")
     public boolean isAdmin(@PathVariable final String id) {
         User user = userService.getLoggedUser();
-        return user.getAdministratedRoom().stream().anyMatch(room -> room
-                .getId().equals(id));
+        User admin = roomService.getRoomById(id).getAdmin();
+        return user.getId().equals(admin.getId());
     }
 }

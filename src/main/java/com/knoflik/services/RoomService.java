@@ -69,9 +69,9 @@ public class RoomService {
         room.setQuestionStat(questionStat);
         User user = userService.getLoggedUser();
         room.setAdmin(user);
-
+        room.addUser(user);
         roomRepository.save(room);
-        user.setCurrentRoom(room);
+        room = getRoomById(room.getId());
         user.addRoomToAdministrate(room);
         userService.saveUser(user);
 

@@ -4,16 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-<!--    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>-->
+    <!--    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>-->
 </head>
 <body>
-<img class="your_room" th:src="@{images/room.png}" alt="room">
+<!--<img class="your_room" th:src="@{images/room.png}" alt="room">-->
 <h1 class="you_entered" id="header"></h1>
+<h1 id="score">YOUR SCORE: 0</h1>
 <p id="p"></p>
-<button type="button" id="knoflik"></button>
-<button type="button" id="next">Next question</button>
-<button type="button" id="true">Right</button>
-<button type="button" id="false">Wrong</button>
+<p id="question">Your question here</p>
+<p id="answer"></p>
+<p id="user_answer"></p>
+<button type="button" id="knoflik"
+        th:onclick="sendVoiceAnswer()">Pup
+</button>
+<button type="button" id="nextButton"
+        th:onclick="getNextQuestion()">Next Question
+</button>
+<button type="button" id="right"
+        th:onclick="sendAnswerApprove()">Right
+</button>
+<button type="button" id="false"
+        th:onclick="sendAnswerDisapprove()">Wrong
+</button>
+<div>
+    <label class="label1" id="answerLabel"> Ваш ответ <input class="in1" type="text" th:id="userAnswer"/></label>
+    <button type="button" id="checkAnswer" th:onclick="checkAnswer()">Check</button>
+</div>
+
+<button type="button" id="exit"
+        th:onclick="exit()">Exit
+</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:src="@{js/room.js}"></script>
