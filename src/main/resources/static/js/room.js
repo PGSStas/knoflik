@@ -60,9 +60,9 @@ async function onConnected() {
     let req = await fetch("api/rooms/" + roomId + ".isAdmin");
     if (req.ok) {
         let text = await req.text();
+        console.log("ADMIN " + text);
 
-        if (text === true) {
-            document.querySelector("#knoflik").style.display="none";
+        if (text == "true") {
             await stompClient.subscribe(
                 '/secured/topic/room/' + roomId + "/admin", onGetAdminInfo);
         } else {
