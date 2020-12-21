@@ -2,28 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <title>Knoflik registration </title>
+    <link th:href="@{css/body.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/login.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{css/registration.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<img class="registration" th:src="@{images/registration.png}" alt="registration">
-<form th:action="@{/registration}" th:object="${userForm}" method="post">
-    <div class="t" th:if="${(param.usernameError != null) and (param.usernameError[0] == 'true')}">
-        This user is already exists!
+<div>
+    <div class="center_image">
+        <img class="registration_image" th:src="@{images/registration.png}" alt="registration">
     </div>
-    <div class="t" th:if="${(param.passwordError != null) and (param.passwordError[0] == 'true')}">
-        Passwords are missmatches!
+    <div class="text_error" th:if="${(param.usernameError != null) and (param.usernameError[0] == 'true')}">
+        This user is already exists
     </div>
-    <div>
-        <label class="label1"> User Name: <input class="in1" type="text" th:field="*{username}"/> </label>
+    <div class="text_error" th:if="${(param.passwordError != null) and (param.passwordError[0] == 'true')}">
+        Passwords don't match
     </div>
-    <div>
-        <label class="label2"> Password: <input class="in2" type="password" th:field="*{password}"/>
-        </label>
-    </div>
-    <label class="label3"> Confirm password: <input class="in3" type="password" th:field="*{passwordConfirm}"/>
-    </label>
-    <div><input class="sign_in" type="submit" value="Sign In"/></div>
-</form>
+    <form class="center_form" th:action="@{/registration}" th:object="${userForm}" method="post">
+        <div>
+            <div class="center_label">
+                <div><label> User Name </label></div>
+                <div><input class="input" type="text" th:field="*{username}"/></div>
+            </div>
+            <div class="center_label">
+                <div><label> Password </label></div>
+                <div><input class="input" type="password" th:field="*{password}"/></div>
+            </div>
+            <div class="center_label">
+                <div><label> Confirm password </label></div>
+                <div><input class="input" type="password" th:field="*{passwordConfirm}"/></div>
+            </div>
+            <div class="center_button">
+                <input class="sign_in_button" type="submit" value="Sign In"/>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>

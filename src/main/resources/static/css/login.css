@@ -1,18 +1,8 @@
-body {
-    background-image: url("../images/background1.png");
-    background-position: 0 0;
-    background-repeat: repeat-y;
-    background-size: 100% auto;
-}
-
-.login {
+.login_image, .registration_image {
     transform: scale(0.7);
-    position: absolute;
-    bottom: 70%;
-    left: 27%;
 }
 
-.sign_in {
+.sign_in_button {
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
     background-color: #195aaa;
     color: #101112;
@@ -24,12 +14,9 @@ body {
     font-size: 40px;
     font-family: sans-serif;
     display: inline-block;
-    position: absolute;
-    bottom: 10%;
-    left: 40%;
 }
 
-.sign_in:hover, .sign_in:active {
+.sign_in_button:hover, .sign_in_button:active {
     background-color: #101112;
     color: #195aaa;
 }
@@ -41,7 +28,7 @@ label {
     font-family: sans-serif;
 }
 
-input {
+.input {
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
     background-color: #a5c3d5;
     color: #101112;
@@ -54,36 +41,44 @@ input {
     font-family: sans-serif;
 }
 
-.label1 {
-    position: absolute;
-    bottom: 55%;
-    left: 30%;
-}
-
-.label2 {
-    position: absolute;
-    bottom: 40%;
-    left: 30%;
-}
-
-.in1 {
-    position: relative;
-    left: 117px;
-}
-
-.in2 {
-    position: relative;
-    left: 155px;
-}
-
-.t {
-    height: 70px;
+.text_error {
+    height: 5vh;
     width: 900px;
     text-align: center;
     text-decoration: none;
-    font-size: 50px;
+    font-size: 40px;
     font-family: sans-serif;
-    position: absolute;
-    bottom: 70%;
-    left: 23%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.center_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.center_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+.center_label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 15vh;
+    width: 40vw;
+}
+
+.center_image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+}
+

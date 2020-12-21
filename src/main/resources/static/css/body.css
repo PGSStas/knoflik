@@ -3,23 +3,21 @@ body {
     background-position: 0 0;
     background-repeat: repeat-y;
     background-size: 100% auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
 }
 
-.room_creation {
-    transform: scale(0.7);
-    position: absolute;
-    bottom: 70%;
-    left: 23%;
-}
-
-button {
+.button {
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
     background-color: #195aaa;
     color: #101112;
     border: 2px #101112;
     height: 90px;
     width: 270px;
-    padding-top: 10px;
     text-align: center;
     text-decoration: none;
     font-size: 40px;
@@ -27,26 +25,7 @@ button {
     display: inline-block;
 }
 
-button:hover, button:active {
+.button:hover, .button:active {
     background-color: #101112;
     color: #195aaa;
-}
-
-.b_submit {
-    position: absolute;
-    bottom: 20%;
-    left: 43%;
-}
-
-.box {
-    position: absolute;
-    bottom: 20%;
-    left: 20%;
-}
-
-.block {
-    transform: scale(3);
-    position: absolute;
-    bottom: 50%;
-    left: 46%;
 }
