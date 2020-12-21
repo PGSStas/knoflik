@@ -25,6 +25,11 @@
 <button type="button" id="false"
         th:onclick="sendAnswerDisapprove()">Wrong
 </button>
+<div>
+    <label class="label1" id="answerLabel"> Ваш ответ <input class="in1" type="text" id="userAnswer"/></label>
+    <button type="button" id="checkAnswer" th:onclick="checkAnswer()">Check</button>
+</div>
+
 <button type="button" id="exit"
         th:onclick="exit()">Exit
 </button>

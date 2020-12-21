@@ -63,6 +63,7 @@ async function onConnected() {
     document.querySelector("#knoflik").style.display = "none";
     document.querySelector("#right").style.display = "none";
     document.querySelector("#false").style.display = "none";
+    showAnswerField(false);
 
     if (req.ok) {
         let text = await req.text();
@@ -95,17 +96,18 @@ function onGetAnswerVerdict(payload) {
         } else {
             document.querySelector('#right').style.display = "none";
             document.querySelector('#false').style.display = "none";
-            if (payload.body.startsWith("true")) {
-                document.querySelector("#nextButton").style.display = "";
-            }
+            document.querySelector("#nextButton").style.display = "";
         }
     } else {
-        if (payload.body.startsWith("Stop") || payload.body.startsWith("true")) {
+        if (payload.body.startsWith("Stop")) {
+            showAnswerField(true);
             document.querySelector('#knoflik').style.display = "none";
-            if (payload.body.startsWith("true")) {
-                score += currentNominal;
-            }
+        } else if (payload.body.startsWith("true")) {
+            showAnswerField(false);
+            document.querySelector('#knoflik').style.display = "none";
+            score += currentNominal;
         } else {
+            showAnswerField(false);
             document.querySelector('#knoflik').style.display = "";
             score -= currentNominal;
         }
@@ -129,9 +131,7 @@ function onNextQuestion(payload) {
         currentNominal *= 10;
     }
     currentQuestion += 1;
-    if (isAdmin) {
-        document.querySelector("#nextButton").style.display = "none";
-    } else {
+    if (!isAdmin) {
         document.querySelector("#knoflik").style.display = "";
     }
     document.querySelector('#question').textContent = payload.body;
@@ -162,6 +162,10 @@ async function getNextQuestion() {
     await fetch("api/rooms/" + roomId + "/nextQuestion", {method: 'POST'});
 }
 
+async function checkAnswer() {
+
+}
+
 function onMessageReceived(payload) {
     let users = JSON.parse(payload.body);
     let activeUsers = "ActiveUsers: ";
@@ -175,6 +179,18 @@ function onError() {
 
 function startQuiz() {
     document.location.href = "/quiz.html?id=" + id;
+}
+
+function showAnswerField(bool) {
+    if (bool) {
+        document.querySelector("#userAnswer").style.display = "";
+        document.querySelector("#checkAnswer").style.display = "";
+        document.querySelector("#answerLabel").style.display = "";
+    } else {
+        document.querySelector("#userAnswer").style.display = "none";
+        document.querySelector("#checkAnswer").style.display = "none";
+        document.querySelector("#answerLabel").style.display = "none";
+    }
 }
 
 function exit() {
