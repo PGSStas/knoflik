@@ -3,6 +3,9 @@
 let header = document.querySelector('#header');
 let paragraph = document.querySelector('#p');
 
+// let answerTime = 30;
+// let writingTime = 10;
+// let timer = null;
 let roomId = null;
 let stompClient = null;
 
@@ -59,8 +62,13 @@ async function onConnected() {
         let text = await req.text();
 
         if (text === true) {
+            document.querySelector("#knoflik").style.display="none";
             await stompClient.subscribe(
                 '/secured/topic/room/' + roomId + "/admin", onGetAdminInfo);
+        } else {
+            document.querySelector("#right").style.display="none";
+            document.querySelector("#false").style.display="none";
+            document.querySelector("#nextButton").style.display="none";
         }
     }
 
@@ -79,6 +87,7 @@ function onGetAnswerVerdict(payload) {
 
 function onNextQuestion(payload) {
     // todo: Сюда приходит текст вопроса
+    document.querySelector('#question').textContent = JSON.parse(payload.body);
     console.log(payload);
 }
 
@@ -91,6 +100,10 @@ async function sendAnswerApprove() {
     // todo: Это действие надо навесить на кнопку, которая говорит, что ответ правильный.
     // После этого у администратора две кнопки (правильно и неправильно) должны скрыться
     // и на их месте должна появиться кнопка следующий вопрос
+    document.querySelector('#right').style.display="none";
+    document.querySelector("#false").style.display="none";
+    document.querySelector("#nextButton").style.display="";
+    // clearTimeout(timer);
     await fetch("api/rooms/" + roomId + "/answer.true", {method: 'POST'});
 }
 
@@ -98,6 +111,10 @@ async function sendAnswerDisapprove() {
     // todo: Это действие надо навесить на кнопку, которая говорит, что ответ неправильный.
     // После этого у администратора две кнопки (правильно и неправильно) должны скрыться
     // и на их месте должна появиться кнопка следующий вопрос
+    document.querySelector("#right").style.display="none";
+    document.querySelector("#false").style.display="none";
+    document.querySelector("#nextButton").style.display="";
+    // clearTimeout(timer);
     await fetch("api/rooms/" + roomId + "/answer.false", {method: 'POST'});
 }
 
@@ -106,6 +123,10 @@ async function sendVoiceAnswer() {
     // После этого у игрока исчезает кнопка knoflik
     // А у администратора кнопки правильно и неправильно должны появиться,
     // а кнопка "следующий вопрос" должна исчезнуть
+    document.querySelector("#right").style.display="";
+    document.querySelector("#false").style.display="";
+    document.querySelector("#nextButton").style.display="none";
+    // timer = setTimeout(sendAnswerDisapprove, 10000);
     await fetch("api/rooms/" + roomId + "/answer", {method: 'POST'});
 }
 
@@ -113,6 +134,7 @@ async function getNextQuestion() {
     // todo: Это действие надо навесить на кнопку следующий вопрос
     // После этого у всех меняется поле вопроса, а у администратора еще и поле
     // ответа. Никаких перестановок кнопок делать не нужно.
+    document.querySelector("#nextButton").style.display="none";
     await fetch("api/rooms/" + roomId + "/nextQuestion", {method: 'POST'});
 }
 

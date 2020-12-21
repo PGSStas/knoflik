@@ -10,49 +10,49 @@
 <body>
 <img class="room_creation" th:src="@{images/room_creation.png}" alt="room_creation">
 <form th:action="@{/room-creation}" th:object="${roomForm}" method="post">
-    <!--    <div id="package-block">-->
-    <!--        &lt;!&ndash;        <p>Пакет: </p>&ndash;&gt;-->
-    <!--        &lt;!&ndash; empty button, for now &ndash;&gt;-->
-    <!--        <button class="b_choose" type="button" id="package-choice-button" th:field="*{packID}">-->
-    <!--            Choose-->
-    <!--        </button>-->
+<!--        <div id="package-block">-->
+            <!--        <p>Пакет: </p>-->
+            <!-- empty button, for now -->
+<!--            <button class="b_choose" type="button" id="package-choice-button" th:field="*{packID}">-->
+<!--                Choose-->
+<!--            </button>-->
     </div>
     <div class="block" id="timings-block">
-        <!--        <p>-->
-        <!--            <label for="topics">Темы: </label>-->
-        <!--            <input type="number" id="topics" value="4" th:value="4" min="1"-->
-        <!--                   max="60"-->
-        <!--                   th:field="*{topics}"/>-->
-        <!--        </p>-->
-        <!--        <p>-->
-        <!--            <label for="question-time">Время после чтения вопроса: </label>-->
-        <!--            <input type="number" id="question-time" th:value="60" min="30"-->
-        <!--                   max="180"-->
-        <!--                   th:field="*{questionTime}"/>-->
-        <!--        </p>-->
-        <!--        <p>-->
+                <p>
+                    <label for="topics">Темы: </label>
+                    <input type="number" id="topics" value="4" th:value="4" min="1"
+                           max="60"
+                           th:field="*{topics}"/>
+                </p>
+<!--                <p>-->
+<!--                    <label for="question-time">Время после чтения вопроса: </label>-->
+<!--                    <input type="number" id="question-time" th:value="60" min="30"-->
+<!--                           max="180"-->
+<!--                           th:field="*{questionTime}"/>-->
+<!--                </p>-->
+<!--                <p>-->
         <label for="answer-time">Answer time: </label>
         <input type="number" id="answer-time" value="10" min="10" max="60"
                th:field="*{answerTime}">
-        <!--        </p>-->
-        <!--        <p>-->
-        <!--            <label for="repeat-time">Время на повторное нажатие: </label>-->
-        <!--            <input type="number" id="repeat-time" value="15" min="0" max="60"-->
-        <!--                   th:field="*{repeatTime}">-->
-        <!--        </p>-->
+<!--                </p>-->
+<!--                <p>-->
+<!--                    <label for="repeat-time">Время на повторное нажатие: </label>-->
+<!--                    <input type="number" id="repeat-time" value="15" min="0" max="60"-->
+<!--                           th:field="*{repeatTime}">-->
+<!--                </p>-->
     </div>
-    <!--    <div class="box" id="checkbox-block">-->
-    <!--        <input  type="checkbox" id="leader" value="leader" th:field="*{leader}"-->
-    <!--               th:onclick="leaderCheckBoxClick()">-->
-    <!--        <label for="leader"> Игра с ведущим</label><br>-->
-    <!--        <input type="checkbox" id="show-questions" value="show"-->
-    <!--               th:field="*{showQuestions}" checked-->
-    <!--               disabled>-->
-    <!--        <label for="show-questions"> Показывать вопросы</label><br>-->
-    <!--        <input type="checkbox" id="oral-answer" name="oral-answer" value="ans"-->
-    <!--               th:field="*{oralAnswer}" disabled>-->
-    <!--        <label for="oral-answer"> Устный ответ</label><br>-->
-    <!--    </div>-->
+        <div class="box" id="checkbox-block">
+            <input  type="checkbox" id="leader" value="leader" th:field="*{leader}"
+                   th:onclick="leaderCheckBoxClick()">
+            <label for="leader"> Игра с ведущим</label><br>
+            <input type="checkbox" id="show-questions" value="show"
+                   th:field="*{showQuestions}" checked
+                   disabled>
+            <label for="show-questions"> Показывать вопросы</label><br>
+            <input type="checkbox" id="oral-answer" name="oral-answer" value="ans"
+                   th:field="*{oralAnswer}" disabled>
+            <label for="oral-answer"> Устный ответ</label><br>
+        </div>
     <div id="create-room-block">
         <button class="b_submit" type="submit">Create</button>
     </div>
