@@ -6,6 +6,11 @@ let paragraph = document.querySelector('#p');
 let roomId = null;
 let stompClient = null;
 
+let score = 0;
+let currentNominal = 0;
+let currentQuestion = 0;
+let isAdmin = false;
+
 document.addEventListener("DOMContentLoaded", setRoom)
 document.getElementById("startQuestionsButton").onclick = startQuiz;
 
@@ -52,16 +57,24 @@ async function onConnected() {
     await stompClient.subscribe(
         '/secured/topic/room/' + roomId + "/next", onNextQuestion);
 
-    // todo: Следующие 3 строки помогут определить, админ ли пользователь
-    // text истинные, если админ и ложный, если иначе.
     let req = await fetch("api/rooms/" + roomId + ".isAdmin");
+
+    document.querySelector("#exit").style.display = "none";
+    document.querySelector("#knoflik").style.display = "none";
+    document.querySelector("#right").style.display = "none";
+    document.querySelector("#false").style.display = "none";
+    showAnswerField(false);
+
     if (req.ok) {
         let text = await req.text();
         console.log("ADMIN " + text);
-
         if (text == "true") {
             await stompClient.subscribe(
                 '/secured/topic/room/' + roomId + "/admin", onGetAdminInfo);
+            isAdmin = true;
+            document.querySelector("#score").style.display = "none";
+        } else {
+            document.querySelector("#nextButton").style.display = "none";
         }
     }
 
@@ -70,51 +83,95 @@ async function onConnected() {
 }
 
 function onGetAnswerVerdict(payload) {
-    // todo: Сюда приходит или надпись вида "Stop, answering PLAYER",
+    // Сюда приходит или надпись вида "Stop, answering PLAYER",
     // где вместо PLAYER - имя текущего игрока
     // Или вердикт "true", если администратор сказал, что игрок
     // ответил правильно, или вердикт "false", если администратор сказал,
     // что игрок ответил неправильно
+    if (isAdmin) {
+        if (payload.body.startsWith("Stop")) {
+            document.querySelector('#right').style.display = "";
+            document.querySelector('#false').style.display = "";
+            document.querySelector("#nextButton").style.display = "none";
+        } else {
+            document.querySelector('#right').style.display = "none";
+            document.querySelector('#false').style.display = "none";
+            document.querySelector("#nextButton").style.display = "";
+        }
+    } else {
+        if (payload.body.startsWith("Stop")) {
+            showAnswerField(true);
+            document.querySelector('#knoflik').style.display = "none";
+        } else if (payload.body.startsWith("true")) {
+            showAnswerField(false);
+            document.querySelector('#knoflik').style.display = "none";
+            score += currentNominal;
+        } else {
+            showAnswerField(false);
+            document.querySelector('#knoflik').style.display = "";
+            score -= currentNominal;
+        }
+        document.querySelector('#score').textContent = "YOUR SCORE: " + score;
+    }
+    if (currentQuestion > topics * 5 && payload.body.startsWith("true")) {
+        document.querySelector('#knoflik').style.display = "none";
+        document.querySelector('#false').style.display = "none";
+        document.querySelector('#right').style.display = "none";
+        document.querySelector('#nextButton').style.display = "none";
+        document.querySelector('#exit').style.display = "";
+    }
     console.log(payload);
 }
 
 function onNextQuestion(payload) {
-    // todo: Сюда приходит текст вопроса
+    // Сюда приходит текст вопроса
+    currentNominal = parseInt(payload.body.substr(0, 2));
+    // проверка нужна потому что 10 почему то не парсится, возможно наши файлы битые (выкидывает Nan)
+    if (currentNominal < 10) {
+        currentNominal *= 10;
+    }
+    currentQuestion += 1;
+    if (!isAdmin) {
+        document.querySelector("#knoflik").style.display = "";
+    }
+    document.querySelector('#question').textContent = payload.body;
     console.log(payload);
 }
 
 function onGetAdminInfo(payload) {
-    // todo: Сюда приходит ответ на вопрос, его надо отображать ТОЛЬКО админу
+    // Сюда приходит ответ на вопрос
+    console.log(payload.body);
+    if (isAdmin) {
+        if (payload.body.startsWith("Ответ: ")) {
+            document.querySelector('#answer').textContent = payload.body;
+            document.querySelector("#user_answer").textContent = "No one answered yet!";
+        } else {
+            document.querySelector("#user_answer").textContent = payload.body;
+        }
+    }
     console.log(payload);
 }
 
 async function sendAnswerApprove() {
-    // todo: Это действие надо навесить на кнопку, которая говорит, что ответ правильный.
-    // После этого у администратора две кнопки (правильно и неправильно) должны скрыться
-    // и на их месте должна появиться кнопка следующий вопрос
     await fetch("api/rooms/" + roomId + "/answer.true", {method: 'POST'});
 }
 
 async function sendAnswerDisapprove() {
-    // todo: Это действие надо навесить на кнопку, которая говорит, что ответ неправильный.
-    // После этого у администратора две кнопки (правильно и неправильно) должны скрыться
-    // и на их месте должна появиться кнопка следующий вопрос
     await fetch("api/rooms/" + roomId + "/answer.false", {method: 'POST'});
 }
 
 async function sendVoiceAnswer() {
-    // todo: Это действие надо навесить на кнопку knoflik.
-    // После этого у игрока исчезает кнопка knoflik
-    // А у администратора кнопки правильно и неправильно должны появиться,
-    // а кнопка "следующий вопрос" должна исчезнуть
     await fetch("api/rooms/" + roomId + "/answer", {method: 'POST'});
 }
 
 async function getNextQuestion() {
-    // todo: Это действие надо навесить на кнопку следующий вопрос
-    // После этого у всех меняется поле вопроса, а у администратора еще и поле
-    // ответа. Никаких перестановок кнопок делать не нужно.
     await fetch("api/rooms/" + roomId + "/nextQuestion", {method: 'POST'});
+}
+
+async function checkAnswer() {
+    let m = document.getElementById("userAnswer").value;
+    console.log(m);
+    await fetch("api/rooms/" + roomId + "/resend", {method: 'POST', body: m});
 }
 
 function onMessageReceived(payload) {
@@ -130,4 +187,20 @@ function onError() {
 
 function startQuiz() {
     document.location.href = "/quiz.html?id=" + id;
+}
+
+function showAnswerField(bool) {
+    if (bool) {
+        document.querySelector("#userAnswer").style.display = "";
+        document.querySelector("#checkAnswer").style.display = "";
+        document.querySelector("#answerLabel").style.display = "";
+    } else {
+        document.querySelector("#userAnswer").style.display = "none";
+        document.querySelector("#checkAnswer").style.display = "none";
+        document.querySelector("#answerLabel").style.display = "none";
+    }
+}
+
+function exit() {
+    document.location.href = "/";
 }
