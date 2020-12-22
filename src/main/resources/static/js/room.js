@@ -144,7 +144,7 @@ function onGetAdminInfo(payload) {
     if (isAdmin) {
         if (payload.body.startsWith("Ответ: ")) {
             document.querySelector('#answer').textContent = payload.body;
-            document.querySelector("#user_answer").textContent = "No one answered yet!";
+            document.querySelector("#user_answer").textContent = "Тут появится ответ участника";
         } else {
             document.querySelector("#user_answer").textContent = payload.body;
         }

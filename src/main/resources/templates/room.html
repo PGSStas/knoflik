@@ -3,40 +3,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <!--    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>-->
+    <title>Комната</title>
+    <link th:href="@{css/body.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{css/room.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<!--<img class="your_room" th:src="@{images/room.png}" alt="room">-->
-<h1 class="you_entered" id="header"></h1>
-<h1 id="score">YOUR SCORE: 0</h1>
-<p id="p"></p>
-<p id="question">Your question here</p>
-<p id="answer"></p>
-<p id="user_answer"></p>
-<button type="button" id="knoflik"
-        th:onclick="sendVoiceAnswer()">Pup
-</button>
-<button type="button" id="nextButton"
-        th:onclick="getNextQuestion()">Next Question
-</button>
-<button type="button" id="right"
-        th:onclick="sendAnswerApprove()">Right
-</button>
-<button type="button" id="false"
-        th:onclick="sendAnswerDisapprove()">Wrong
-</button>
 <div>
-    <label class="label1" id="answerLabel"> Ваш ответ <input class="in1" type="text" th:id="userAnswer"/></label>
-    <button type="button" id="checkAnswer" th:onclick="checkAnswer()">Check</button>
+    <div class="center_element">
+        <img class="your_room" th:src="@{images/room.png}" alt="room">
+    </div>
+    <div class="left_text_">
+        <h1 class="you_entered" id="header"></h1>
+    </div>
+    <div class="left_text_">
+        <h1 id="score">YOUR SCORE: 0</h1>
+    </div>
+    <!--    <div class="left_text_">-->
+    <!--        <p id="p"></p>-->
+    <!--    </div>-->
+    <div class="question">
+        <p class="question_text" id="question">Здесь появится вопрос</p>
+    </div>
+    <div><br></div>
+    <div class="center_element">
+        <p id="answer"></p>
+    </div>
+    <div class="center_element">
+        <p id="user_answer"></p>
+    </div>
+    <div class="center_element">
+        <button class="super_button" type="button" id="knoflik"
+                th:onclick="sendVoiceAnswer()">Pup
+        </button>
+    </div>
+    <div class="center_element">
+        <button type="button" id="nextButton"
+                th:onclick="getNextQuestion()">Next Question
+        </button>
+    </div>
+    <form class="center_element">
+        <div>
+            <div class="center_label1">
+                <button type="button" id="right"
+                        th:onclick="sendAnswerApprove()">Right
+                </button>
+                <button type="button" id="false"
+                        th:onclick="sendAnswerDisapprove()">Wrong
+                </button>
+            </div>
+        </div>
+    </form>
+    <form class="center_element">
+        <div>
+            <div class="center_label2">
+                <div><label id="answerLabel"> Ваш ответ</label></div>
+                <div><input class="input" type="text" th:id="userAnswer"/></div>
+            </div>
+        </div>
+    </form>
+    <div class="center_element">
+        <button class="super_button" type="button" id="checkAnswer" th:onclick="checkAnswer()">Check
+        </button>
+    </div>
+    <button class="ex_button" type="button" id="exit"
+            th:onclick="exit()">Exit
+    </button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:src="@{js/room.js}"></script>
 </div>
-
-<button type="button" id="exit"
-        th:onclick="exit()">Exit
-</button>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script th:src="@{js/room.js}"></script>
 </body>
 </html>
-

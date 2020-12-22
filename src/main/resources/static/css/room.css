@@ -1,31 +1,83 @@
-body {
-    background-image: url("../images/background1.png");
-    background-position: 0 0;
-    background-repeat: repeat-y;
-    background-size: 100% auto;
-}
-
-.your_room {
-    transform: scale(0.7);
-    position: absolute;
-    bottom: 70%;
-    left: 31%;
-}
-
-.you_entered {
+button {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #195aaa;
+    color: #101112;
+    border: 2px #101112;
+    height: 90px;
+    width: 270px;
+    padding-top: 10px;
     text-align: center;
     text-decoration: none;
-    font-size: 36px;
+    font-size: 40px;
     font-family: sans-serif;
-    position: absolute;
-    bottom: 66%;
-    left: 33%;
+    display: inline-block;
 }
 
-button {
+button:hover, button:active {
+    background-color: #101112;
+    color: #195aaa;
+}
+
+label {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: sans-serif;
+}
+
+p {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.question {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 70vw;
+    height: 20vh;
+}
+
+.left_text_ {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.input {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #a5c3d5;
+    color: #101112;
+    border: 2px #101112;
+    height: 35px;
+    width: 180px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.question_text {
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+.super_button {
     display: inline-block;
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 120px;
     font-size: 24px;
     cursor: pointer;
     text-align: center;
@@ -36,18 +88,34 @@ button {
     border: none;
     border-radius: 15px;
     box-shadow: 0 9px #999;
-    position: absolute;
-    bottom: 17%;
-    left: 42%;
 }
 
-button:hover {
+.super_button:hover {
     background-color: #4254f5;
 }
 
-button:active {
+.super_button:active {
     background-color: #4254f5;
     box-shadow: 0 5px #101112;
     transform: translateY(4px);
 }
 
+.center_element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center_label1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70vw;
+}
+
+.center_label2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 35vw;
+}

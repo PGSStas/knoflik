@@ -1,15 +1,5 @@
-body {
-    background-image: url("../images/background1.png");
-    background-position: 0 0;
-    background-repeat: repeat-y;
-    background-size: 100% auto;
-}
-
 .room_creation {
     transform: scale(0.7);
-    position: absolute;
-    bottom: 70%;
-    left: 23%;
 }
 
 button {
@@ -32,22 +22,43 @@ button:hover, button:active {
     color: #195aaa;
 }
 
-.b_submit {
-    position: absolute;
-    bottom: 20%;
-    left: 43%;
+label {
+    text-align: center;
+    text-decoration: none;
+    font-size: 40px;
+    font-family: sans-serif;
 }
 
-.box {
-    position: absolute;
-    bottom: 20%;
-    left: 20%;
+.input {
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2), 0 10px 25px 0 rgba(0, 0, 0, 0.19);
+    background-color: #a5c3d5;
+    color: #101112;
+    border: 2px #101112;
+    height: 70px;
+    width: 300px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: sans-serif;
 }
 
+.center_element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.block {
-    transform: scale(3);
-    position: absolute;
-    bottom: 50%;
-    left: 46%;
+.center_label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20vh;
+    width: 45vw;
+}
+
+.center_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
 }
